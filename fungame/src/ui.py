@@ -108,6 +108,8 @@ class UI:
     def __init__(self) -> None:
         self.font_sm = pygame.font.SysFont("consolas", 16, bold=True)
         self.font = pygame.font.SysFont("consolas", 20, bold=True)
+        self.font_level_body = pygame.font.SysFont("consolas", 18, bold=True)
+        self.font_level_title = pygame.font.SysFont("consolas", 22, bold=True)
         self.font_lg = pygame.font.SysFont("consolas", 34, bold=True)
         self.font_xl = pygame.font.SysFont("consolas", 56, bold=True)
 
@@ -119,10 +121,11 @@ class UI:
         font: pygame.font.Font | None = None,
         color: tuple[int, int, int] = COLOR_TEXT,
         center: bool = False,
+        antialias: bool = False,
     ) -> pygame.Rect:
         font = font or self.font
-        shadow = font.render(value, False, (0, 0, 0))
-        image = font.render(value, False, color)
+        shadow = font.render(value, antialias, (0, 0, 0))
+        image = font.render(value, antialias, color)
         rect = image.get_rect()
         if center:
             rect.center = pos
@@ -390,11 +393,11 @@ class UI:
         }
 
     def level_card_rects(self, count: int) -> list[pygame.Rect]:
-        card_w = 300
+        card_w = 320
         gap = 24
         total = count * card_w + (count - 1) * gap
         start = SCREEN_WIDTH // 2 - total // 2
-        return [pygame.Rect(start + i * (card_w + gap), 228, card_w, 300) for i in range(count)]
+        return [pygame.Rect(start + i * (card_w + gap), 210, card_w, 336) for i in range(count)]
 
     def achievement_tile_rects(self, page: int = 0) -> dict[str, pygame.Rect]:
         left = 42
@@ -1231,9 +1234,9 @@ class UI:
             self.text(surface, self._fit_text(description, self.font_sm, 372 - (label_x - summary_x)), (label_x + 18, y + 15), self.font_sm, COLOR_MUTED)
 
     def draw_level_up(self, surface: pygame.Surface, game: object, choices: Sequence[Upgrade]) -> None:
-        self._dark_overlay(surface, 205)
-        self.text(surface, "LEVEL UP", (SCREEN_WIDTH // 2, 134), self.font_xl, COLOR_AMBER, center=True)
-        self.text(surface, "Choose one upgrade", (SCREEN_WIDTH // 2, 188), self.font_sm, COLOR_MUTED, center=True)
+        self._dark_overlay(surface, 225)
+        self.text(surface, "LEVEL UP", (SCREEN_WIDTH // 2, 116), self.font_xl, COLOR_AMBER, center=True, antialias=True)
+        self.text(surface, "Choose one upgrade", (SCREEN_WIDTH // 2, 174), self.font, COLOR_TEXT, center=True, antialias=True)
         for idx, (rect, upgrade) in enumerate(zip(self.level_card_rects(len(choices)), choices), start=1):
             color = self._upgrade_color(upgrade)
             self._panel(surface, rect, color=color)
@@ -1245,24 +1248,36 @@ class UI:
             # prefer their matching tank portrait; the family icon remains a fallback.
             icon = game.assets.icons.get(evolution_icon) or game.assets.icons.get(upgrade.id, game.assets.icons.get(upgrade.icon))
             if icon:
-                self._blit_pixel_fit(surface, icon, pygame.Rect(rect.centerx - 26, rect.y + 22, 52, 52))
-            self.text(surface, f"{idx}", (rect.x + 16, rect.y + 16), self.font, COLOR_MUTED)
+                self._blit_pixel_fit(surface, icon, pygame.Rect(rect.centerx - 30, rect.y + 22, 60, 60))
+            self.text(surface, f"{idx}", (rect.x + 18, rect.y + 18), self.font_level_title, COLOR_TEXT, antialias=True)
             title = f"EVOLUTION: {upgrade.name}" if upgrade.rarity == "evolution" else upgrade.name
-            self.text(surface, self._fit_text(title, self.font, rect.width - 28), (rect.centerx, rect.y + 82), self.font, color, center=True)
+            self.text(surface, self._fit_text(title, self.font_level_title, rect.width - 32), (rect.centerx, rect.y + 94), self.font_level_title, color, center=True, antialias=True)
             tier = tier_text(upgrade)
             tier = {"Tier I": "I", "Tier II": "II", "Tier III": "III"}.get(tier, tier)
             badge = f"{family_label(family)} | {tier}"
             if upgrade.rarity != "common":
                 badge = f"{badge} | {upgrade.rarity.title()}"
-            self.text(surface, self._fit_text(badge, self.font_sm, rect.width - 40), (rect.centerx, rect.y + 110), self.font_sm, COLOR_MUTED, center=True)
-            self._draw_multiline_text(surface, upgrade.description, pygame.Rect(rect.x + 24, rect.y + 142, rect.width - 48, 48), self.font_sm, COLOR_TEXT)
+            self.text(surface, self._fit_text(badge, self.font_level_body, rect.width - 40), (rect.centerx, rect.y + 126), self.font_level_body, COLOR_TEXT, center=True, antialias=True)
+            pygame.draw.line(surface, COLOR_LINE, (rect.x + 22, rect.y + 150), (rect.right - 22, rect.y + 150), 2)
+            self._draw_multiline_text(
+                surface,
+                upgrade.description,
+                pygame.Rect(rect.x + 24, rect.y + 166, rect.width - 48, 66),
+                self.font_level_body,
+                COLOR_TEXT,
+                antialias=True,
+            )
             progress = family_progress_text(game.player, upgrade)
-            self.text(surface, self._fit_text(progress, self.font_sm, rect.width - 48), (rect.x + 24, rect.y + 208), self.font_sm, color)
+            self.text(surface, self._fit_text(progress, self.font_level_body, rect.width - 48), (rect.x + 24, rect.y + 248), self.font_level_body, color, antialias=True)
             hint = unlock_hint_text(game.player, upgrade)
             if hint:
-                self.text(surface, self._fit_text(hint, self.font_sm, rect.width - 48), (rect.x + 24, rect.y + 232), self.font_sm, COLOR_AMBER)
-            self.text(surface, self._fit_text(stack_text(game.player, upgrade), self.font_sm, 120), (rect.x + 24, rect.bottom - 28), self.font_sm, COLOR_CYAN)
-        self.text(surface, "PRESS 1 / 2 / 3 OR CLICK TO CHOOSE", (SCREEN_WIDTH // 2, 662), self.font_sm, COLOR_AMBER, center=True)
+                self.text(surface, self._fit_text(hint, self.font_level_body, rect.width - 48), (rect.x + 24, rect.y + 278), self.font_level_body, COLOR_AMBER, antialias=True)
+            self.text(surface, self._fit_text(stack_text(game.player, upgrade), self.font_level_body, 150), (rect.x + 24, rect.bottom - 34), self.font_level_body, COLOR_CYAN, antialias=True)
+
+        prompt_rect = pygame.Rect(SCREEN_WIDTH // 2 - 250, 640, 500, 44)
+        pygame.draw.rect(surface, COLOR_PANEL, prompt_rect)
+        pygame.draw.rect(surface, COLOR_AMBER, prompt_rect, 2)
+        self.text(surface, "PRESS 1 / 2 / 3 OR CLICK TO CHOOSE", prompt_rect.center, self.font, COLOR_AMBER, center=True, antialias=True)
 
     def draw_game_over(self, surface: pygame.Surface, game: object) -> None:
         self._dark_overlay(surface, 215)
@@ -1440,7 +1455,16 @@ class UI:
         overlay.fill((*COLOR_BG, alpha))
         surface.blit(overlay, (0, 0))
 
-    def _draw_multiline_text(self, surface: pygame.Surface, text: str, rect: pygame.Rect, font: pygame.font.Font, color: tuple[int, int, int], center: bool = False) -> None:
+    def _draw_multiline_text(
+        self,
+        surface: pygame.Surface,
+        text: str,
+        rect: pygame.Rect,
+        font: pygame.font.Font,
+        color: tuple[int, int, int],
+        center: bool = False,
+        antialias: bool = False,
+    ) -> None:
         words = text.split(" ")
         lines = []
         current_line = []
@@ -1458,7 +1482,7 @@ class UI:
         for line in lines:
             if y + font.get_linesize() > rect.bottom:
                 break
-            self.text(surface, line, (rect.centerx if center else rect.x, y), font, color, center=center)
+            self.text(surface, line, (rect.centerx if center else rect.x, y), font, color, center=center, antialias=antialias)
             y += font.get_linesize()
 
     def get_achievement_at(self, pos: tuple[int, int]) -> object | None:

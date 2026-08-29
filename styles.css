@@ -914,8 +914,209 @@ h1 {
     padding-bottom: clamp(6rem, 9vw, 8rem);
 }
 
-.map-first .section-header {
+.map-intro-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(440px, 0.85fr);
+    gap: clamp(1.5rem, 3vw, 2.4rem);
+    align-items: end;
     margin-bottom: clamp(1.4rem, 2.5vw, 2.1rem);
+}
+
+.map-intro-grid .section-header {
+    margin-bottom: 0;
+}
+
+.map-intro-grid .section-heading {
+    font-size: clamp(2rem, 3.6vw, 3.65rem);
+}
+
+.trailhead-community {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+}
+
+.trail-widget {
+    position: relative;
+    display: flex;
+    min-height: 210px;
+    flex-direction: column;
+    padding: 1rem;
+    overflow: hidden;
+    background:
+        linear-gradient(145deg, rgba(32, 59, 40, 0.92), rgba(8, 23, 16, 0.98)),
+        repeating-linear-gradient(90deg, rgba(239, 191, 79, 0.04) 0 2px, transparent 2px 8px);
+    border: 2px solid rgba(102, 128, 69, 0.92);
+    box-shadow: 5px 5px 0 var(--shadow);
+}
+
+.trail-widget::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(239, 191, 79, 0.13);
+    pointer-events: none;
+}
+
+.trail-widget > * {
+    position: relative;
+    z-index: 1;
+}
+
+.trail-widget .terminal-label {
+    margin-bottom: 0.55rem;
+    font-size: 0.48rem;
+    line-height: 1.55;
+}
+
+.trail-widget__topline {
+    display: flex;
+    gap: 0.55rem;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.community-mode {
+    flex: 0 0 auto;
+    padding: 0.22rem 0.3rem;
+    border: 1px solid rgba(239, 191, 79, 0.5);
+    color: var(--gold);
+    font-family: var(--pixel-font);
+    font-size: 0.36rem;
+    line-height: 1.35;
+    text-transform: uppercase;
+}
+
+.community-mode[data-state="live"] {
+    border-color: rgba(120, 208, 126, 0.62);
+    color: #9ee7a4;
+}
+
+.ledger-reading {
+    display: flex;
+    gap: 0.65rem;
+    align-items: center;
+    margin-top: auto;
+}
+
+.ledger-signal {
+    width: 12px;
+    height: 12px;
+    flex: 0 0 auto;
+    background: var(--orange);
+    box-shadow:
+        0 0 0 3px rgba(250, 70, 22, 0.17),
+        0 0 18px rgba(250, 70, 22, 0.72);
+    animation: ledger-pulse 2.4s steps(2, end) infinite;
+}
+
+.ledger-count {
+    color: var(--text);
+    font-family: var(--pixel-font);
+    font-size: clamp(1.7rem, 2.7vw, 2.45rem);
+    line-height: 1;
+    text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.42);
+}
+
+.trail-widget__copy {
+    margin: 0.55rem 0 0;
+    color: var(--text);
+    font-size: 0.78rem;
+    line-height: 1.35;
+}
+
+.trail-widget__status {
+    margin: 0.35rem 0 0;
+    color: var(--dim);
+    font-size: 0.67rem;
+    line-height: 1.35;
+}
+
+.trail-widget--campfire h3 {
+    max-width: 150px;
+    margin: auto 0 0;
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.2;
+}
+
+.trail-widget--campfire .trail-widget__copy {
+    margin: 0.45rem 0 0.75rem;
+    color: var(--muted);
+    font-size: 0.72rem;
+}
+
+.trail-widget--campfire .pixel-button {
+    width: 100%;
+    min-height: 40px;
+    justify-content: space-between;
+    gap: 0.55rem;
+    padding: 0.55rem 0.65rem;
+    border-width: 2px;
+    box-shadow: 3px 3px 0 var(--shadow);
+    font-size: 0.48rem;
+    cursor: pointer;
+}
+
+.guestbook-count {
+    color: #bfcaff;
+    font-family: var(--body-font);
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: none;
+}
+
+.campfire-mark {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    width: 36px;
+    height: 42px;
+    opacity: 0.88;
+}
+
+.campfire-mark__flame {
+    position: absolute;
+    top: 0;
+    left: 11px;
+    width: 14px;
+    height: 24px;
+    background: var(--gold);
+    clip-path: polygon(50% 0, 100% 44%, 85% 100%, 15% 100%, 0 44%);
+    box-shadow: inset 0 -8px 0 var(--orange);
+    animation: campfire-flicker 1.8s steps(2, end) infinite;
+}
+
+.campfire-mark__logs,
+.campfire-mark__logs::before {
+    position: absolute;
+    bottom: 5px;
+    left: 2px;
+    width: 32px;
+    height: 6px;
+    background: #88522f;
+    content: "";
+}
+
+.campfire-mark__logs {
+    transform: rotate(18deg);
+}
+
+.campfire-mark__logs::before {
+    inset: 0;
+    transform: rotate(-36deg);
+}
+
+@keyframes ledger-pulse {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 1; }
+}
+
+@keyframes campfire-flicker {
+    0%, 100% { transform: translateY(0) scaleX(1); }
+    50% { transform: translateY(-2px) scaleX(0.84); }
 }
 
 .swamp-map {
@@ -1420,6 +1621,245 @@ h1 {
     font-size: 0.95rem;
 }
 
+.guestbook-dialog {
+    width: min(720px, calc(100% - 28px));
+    max-height: calc(100dvh - 28px);
+    padding: 0;
+    overflow: visible;
+    background: transparent;
+    border: 0;
+    color: var(--text);
+}
+
+.guestbook-dialog::backdrop {
+    background: rgba(1, 7, 4, 0.82);
+    backdrop-filter: blur(5px);
+}
+
+.guestbook-dialog[open] {
+    animation: guestbook-enter var(--motion-enter) var(--ease-out);
+}
+
+.guestbook-shell {
+    max-height: calc(100dvh - 28px);
+    padding: clamp(1rem, 3vw, 1.6rem);
+    overflow-y: auto;
+    background:
+        linear-gradient(145deg, rgba(250, 70, 22, 0.07), transparent 34%),
+        rgba(8, 23, 16, 0.99);
+    border: 3px solid var(--border);
+    box-shadow: 9px 9px 0 rgba(0, 0, 0, 0.56);
+}
+
+.guestbook-header {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(102, 128, 69, 0.48);
+}
+
+.guestbook-header .terminal-label {
+    margin-bottom: 0.45rem;
+}
+
+.guestbook-header h2 {
+    margin-bottom: 0.35rem;
+    color: var(--text);
+    font-size: clamp(1.35rem, 4vw, 2rem);
+    line-height: 1.12;
+}
+
+.guestbook-header p:last-child {
+    margin: 0;
+    font-size: 0.92rem;
+}
+
+.guestbook-close {
+    min-width: 72px;
+    min-height: 42px;
+    padding: 0.55rem 0.7rem;
+    background: var(--panel-2);
+    border: 2px solid var(--border);
+    color: var(--text);
+    font-family: var(--pixel-font);
+    font-size: 0.48rem;
+    line-height: 1;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.guestbook-notice {
+    min-height: 1.5rem;
+    margin: 0.85rem 0;
+    color: var(--dim);
+    font-size: 0.8rem;
+}
+
+.guestbook-notice[data-state="error"],
+.guestbook-form__status[data-state="error"] {
+    color: #ff9c82;
+}
+
+.guestbook-notice[data-state="success"],
+.guestbook-form__status[data-state="success"] {
+    color: #9ee7a4;
+}
+
+.guestbook-feed {
+    max-height: 270px;
+    overflow-y: auto;
+    scrollbar-color: var(--border) var(--bg-deep);
+}
+
+.guestbook-messages {
+    display: grid;
+    gap: 0.7rem;
+}
+
+.guestbook-message,
+.guestbook-empty {
+    padding: 0.85rem 0.95rem;
+    background: rgba(13, 68, 80, 0.22);
+    border: 1px solid rgba(102, 128, 69, 0.56);
+}
+
+.guestbook-message__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.8rem;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.45rem;
+}
+
+.guestbook-message__meta strong {
+    color: var(--gold);
+    font-size: 0.8rem;
+}
+
+.guestbook-message__meta time {
+    color: var(--dim);
+    font-family: var(--pixel-font);
+    font-size: 0.4rem;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+
+.guestbook-message p,
+.guestbook-empty {
+    margin: 0;
+    color: var(--text);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.guestbook-empty {
+    color: var(--muted);
+    text-align: center;
+}
+
+.guestbook-form {
+    display: grid;
+    gap: 0.9rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid rgba(102, 128, 69, 0.48);
+}
+
+.guestbook-field {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.guestbook-field--nickname {
+    max-width: 310px;
+}
+
+.guestbook-field label {
+    color: var(--text);
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+
+.guestbook-field label span {
+    color: var(--dim);
+    font-weight: 500;
+}
+
+.guestbook-field input,
+.guestbook-field textarea {
+    width: 100%;
+    padding: 0.72rem 0.8rem;
+    resize: vertical;
+    background: rgba(3, 8, 6, 0.86);
+    border: 2px solid rgba(102, 128, 69, 0.82);
+    border-radius: 0;
+    color: var(--text);
+    font: inherit;
+    font-size: 0.92rem;
+}
+
+.guestbook-field input::placeholder,
+.guestbook-field textarea::placeholder {
+    color: #718465;
+}
+
+.guestbook-field__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    justify-content: space-between;
+    color: var(--dim);
+    font-size: 0.7rem;
+}
+
+.turnstile-slot:not([hidden]) {
+    display: block;
+    min-height: 65px;
+}
+
+.guestbook-form__actions {
+    display: flex;
+    gap: 0.9rem;
+    align-items: center;
+}
+
+.guestbook-form__actions .pixel-button {
+    flex: 0 0 auto;
+    cursor: pointer;
+}
+
+.guestbook-form__actions .pixel-button:disabled {
+    cursor: wait;
+    filter: grayscale(0.55);
+    opacity: 0.68;
+}
+
+.guestbook-form__status {
+    color: var(--dim);
+    font-size: 0.78rem;
+}
+
+.guestbook-privacy {
+    margin: 1rem 0 0;
+    color: var(--dim);
+    font-size: 0.68rem;
+    line-height: 1.45;
+}
+
+body:has(.guestbook-dialog[open]) {
+    overflow: hidden;
+}
+
+@keyframes guestbook-enter {
+    from { opacity: 0; transform: translateY(10px) scale(0.985); }
+    to { opacity: 1; transform: none; }
+}
+
 @media (max-width: 1180px) {
     .nav-list {
         gap: 0.55rem;
@@ -1452,6 +1892,17 @@ h1 {
 
     .timeline::before {
         display: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .map-intro-grid {
+        grid-template-columns: 1fr;
+        align-items: start;
+    }
+
+    .trailhead-community {
+        max-width: 620px;
     }
 }
 
@@ -1580,6 +2031,10 @@ h1 {
         font-size: clamp(1.8rem, 9vw, 2.7rem);
     }
 
+    .trail-widget {
+        min-height: 194px;
+    }
+
     .swamp-map {
         display: grid;
         aspect-ratio: auto;
@@ -1652,6 +2107,15 @@ h1 {
     .fireflies {
         display: none;
     }
+
+    .guestbook-form__actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .guestbook-form__actions .pixel-button {
+        width: 100%;
+    }
 }
 
 @media (max-width: 430px) {
@@ -1681,6 +2145,34 @@ h1 {
 
     .project-facts {
         grid-template-columns: 1fr;
+    }
+
+    .trailhead-community {
+        grid-template-columns: 1fr;
+    }
+
+    .trail-widget {
+        min-height: 180px;
+    }
+
+    .guestbook-dialog {
+        width: calc(100% - 18px);
+        max-height: calc(100dvh - 18px);
+    }
+
+    .guestbook-shell {
+        max-height: calc(100dvh - 18px);
+        padding: 0.9rem;
+    }
+
+    .guestbook-header {
+        gap: 0.65rem;
+    }
+
+    .guestbook-close {
+        min-width: 62px;
+        padding-inline: 0.5rem;
+        font-size: 0.42rem;
     }
 }
 

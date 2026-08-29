@@ -1,0 +1,7 @@
+project_id = "portfolio-community"
+
+[functions.visitor-ledger]
+verify_jwt = false
+
+[functions.campfire-guestbook]
+verify_jwt = false

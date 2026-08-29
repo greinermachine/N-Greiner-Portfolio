@@ -10,8 +10,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/png" href="Pictures/Logos/NG.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=portfolio-refresh-2">
+    <link rel="stylesheet" href="styles.css?v=community-pass-1">
     <script src="script.js?v=motion-pass-5" defer></script>
+    <script src="community-config.js?v=community-pass-1" defer></script>
+    <script type="module" src="community.mjs?v=community-pass-1"></script>
 </head>
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -45,10 +47,41 @@
         <section class="location-band location-band--map map-first" id="map" aria-labelledby="map-title">
             <div class="location-scene" aria-hidden="true"></div>
             <div class="page-wrap">
-                <div class="section-header">
-                    <p class="section-kicker">Survey Board / Swamp Map</p>
-                    <h2 class="section-heading" id="map-title">A visual route through the portfolio.</h2>
-                    <p class="section-lede">Every map marker represents a key area of my work.</p>
+                <div class="map-intro-grid">
+                    <div class="section-header">
+                        <p class="section-kicker">Survey Board / Swamp Map</p>
+                        <h2 class="section-heading" id="map-title">A visual route through the portfolio.</h2>
+                        <p class="section-lede">Every map marker represents a key area of my work.</p>
+                    </div>
+
+                    <aside class="trailhead-community" aria-label="Visitor ledger and campfire guestbook">
+                        <article class="trail-widget trail-widget--ledger">
+                            <div class="trail-widget__topline">
+                                <p class="terminal-label">Visitor / Ledger</p>
+                                <span class="community-mode" data-community-mode>Connecting</span>
+                            </div>
+                            <div class="ledger-reading">
+                                <span class="ledger-signal" aria-hidden="true"></span>
+                                <strong class="ledger-count" data-visitor-count aria-live="polite">&mdash;</strong>
+                            </div>
+                            <p class="trail-widget__copy">trail visits recorded</p>
+                            <p class="trail-widget__status" data-ledger-status>Opening the field log...</p>
+                        </article>
+
+                        <article class="trail-widget trail-widget--campfire">
+                            <div class="campfire-mark" aria-hidden="true">
+                                <span class="campfire-mark__flame"></span>
+                                <span class="campfire-mark__logs"></span>
+                            </div>
+                            <p class="terminal-label">Campfire / Guestbook</p>
+                            <h3>Leave a trail note.</h3>
+                            <p class="trail-widget__copy" data-guestbook-summary>Short, anonymous messages from fellow travelers.</p>
+                            <button class="pixel-button pixel-button--blue pixel-button--compact" type="button" data-open-guestbook>
+                                Open guestbook
+                                <span class="guestbook-count" data-guestbook-count aria-live="polite">&mdash;</span>
+                            </button>
+                        </article>
+                    </aside>
                 </div>
 
                 <nav class="swamp-map pixel-panel" aria-label="Portfolio section map">
@@ -435,6 +468,50 @@
             <div class="scene-divider scene-divider--final" aria-hidden="true"></div>
         </section>
     </main>
+
+    <dialog class="guestbook-dialog" data-guestbook-dialog aria-labelledby="guestbook-title">
+        <div class="guestbook-shell">
+            <header class="guestbook-header">
+                <div>
+                    <p class="terminal-label">Campfire Channel / Public Log</p>
+                    <h2 id="guestbook-title">Campfire Guestbook</h2>
+                    <p>Leave a short note for the next traveler.</p>
+                </div>
+                <button class="guestbook-close" type="button" data-close-guestbook aria-label="Close guestbook">Close</button>
+            </header>
+
+            <p class="guestbook-notice" data-guestbook-notice role="status" aria-live="polite">Loading the latest trail notes...</p>
+
+            <div class="guestbook-feed" aria-label="Guestbook messages">
+                <ol class="guestbook-messages" data-guestbook-messages aria-live="polite" aria-busy="true"></ol>
+            </div>
+
+            <form class="guestbook-form" data-guestbook-form novalidate>
+                <div class="guestbook-field guestbook-field--nickname">
+                    <label for="guestbook-nickname">Trail name <span>(optional)</span></label>
+                    <input id="guestbook-nickname" name="nickname" type="text" maxlength="24" autocomplete="nickname" placeholder="Anonymous Scout">
+                </div>
+
+                <div class="guestbook-field">
+                    <label for="guestbook-message">Your note</label>
+                    <textarea id="guestbook-message" name="message" rows="4" maxlength="280" required placeholder="Share a hello, a thought, or a favorite project..."></textarea>
+                    <div class="guestbook-field__meta">
+                        <span>Plain text only &bull; links are disabled</span>
+                        <span><strong data-message-remaining>280</strong> left</span>
+                    </div>
+                </div>
+
+                <div class="turnstile-slot" data-turnstile-slot hidden></div>
+
+                <div class="guestbook-form__actions">
+                    <button class="pixel-button" type="submit" data-submit-guestbook>Post trail note</button>
+                    <span class="guestbook-form__status" data-guestbook-form-status aria-live="polite"></span>
+                </div>
+            </form>
+
+            <p class="guestbook-privacy">Messages are public. No email is requested; moderation and anti-spam checks still apply.</p>
+        </div>
+    </dialog>
 
     <footer class="site-footer">
         <div class="page-wrap">

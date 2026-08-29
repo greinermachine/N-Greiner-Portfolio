@@ -40,12 +40,11 @@ test("guestbook validation rejects blank, oversized, linked, and control-charact
 test("live mode requires all public configuration values", () => {
     const complete = {
         supabaseUrl: "https://sample-project.supabase.co",
-        supabasePublishableKey: "sb_publishable_realvalue",
-        turnstileSiteKey: "0x4AAAA-real-site-key"
+        supabasePublishableKey: "sb_publishable_realvalue"
     };
 
     assert.equal(isCommunityConfigured(complete), true);
-    assert.equal(isCommunityConfigured({ ...complete, turnstileSiteKey: "" }), false);
+    assert.equal(isCommunityConfigured({ ...complete, supabasePublishableKey: "" }), false);
     assert.equal(isCommunityConfigured({ ...complete, supabaseUrl: "javascript:alert(1)" }), false);
     assert.equal(isCommunityConfigured({ ...complete, supabasePublishableKey: "YOUR_KEY" }), false);
 });
@@ -92,6 +91,5 @@ test("database migration keeps direct public table access closed", async () => {
 test("browser configuration contains no server-side secret fields", async () => {
     const config = await readFile(new URL("community-config.js", rootUrl), "utf8");
     assert.doesNotMatch(config, /service[_-]?role/i);
-    assert.doesNotMatch(config, /TURNSTILE_SECRET_KEY/);
     assert.doesNotMatch(config, /RATE_LIMIT_PEPPER/);
 });

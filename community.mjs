@@ -57,7 +57,7 @@ export function validateGuestbookMessage(value) {
 export function isCommunityConfigured(config) {
     if (!config || typeof config !== "object") return false;
 
-    const values = [config.supabaseUrl, config.supabasePublishableKey, config.turnstileSiteKey];
+    const values = [config.supabaseUrl, config.supabasePublishableKey];
     if (values.some((value) => typeof value !== "string" || !value.trim())) return false;
 
     try {
@@ -230,10 +230,10 @@ class RemoteCommunityClient {
         return payload.messages.map(normalizeMessageRecord).filter(Boolean).slice(0, MAX_VISIBLE_MESSAGES);
     }
 
-    async postMessage({ nickname, message, turnstileToken }) {
+    async postMessage({ nickname, message }) {
         const payload = await this.request(this.config.guestbookFunction || "campfire-guestbook", {
             method: "POST",
-            body: JSON.stringify({ nickname, message, turnstileToken })
+            body: JSON.stringify({ nickname, message })
         });
         const record = normalizeMessageRecord(payload.message);
         if (!record) throw new CommunityError("The posted note could not be read back safely.");
@@ -260,29 +260,6 @@ function formatMessageTime(value) {
     }).format(timestamp);
 }
 
-function loadTurnstileScript() {
-    if (window.turnstile) return Promise.resolve(window.turnstile);
-
-    const existing = document.querySelector("script[data-community-turnstile]");
-    if (existing) {
-        return new Promise((resolve, reject) => {
-            existing.addEventListener("load", () => resolve(window.turnstile), { once: true });
-            existing.addEventListener("error", () => reject(new Error("Turnstile failed to load.")), { once: true });
-        });
-    }
-
-    return new Promise((resolve, reject) => {
-        const script = document.createElement("script");
-        script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
-        script.async = true;
-        script.defer = true;
-        script.dataset.communityTurnstile = "true";
-        script.addEventListener("load", () => resolve(window.turnstile), { once: true });
-        script.addEventListener("error", () => reject(new Error("Turnstile failed to load.")), { once: true });
-        document.head.append(script);
-    });
-}
-
 function initializeCommunity() {
     const visitorCount = document.querySelector("[data-visitor-count]");
     const ledgerStatus = document.querySelector("[data-ledger-status]");
@@ -300,15 +277,11 @@ function initializeCommunity() {
     const remaining = document.querySelector("[data-message-remaining]");
     const submitButton = document.querySelector("[data-submit-guestbook]");
     const formStatus = document.querySelector("[data-guestbook-form-status]");
-    const turnstileSlot = document.querySelector("[data-turnstile-slot]");
-
     if (!visitorCount || !ledgerStatus || !openButton || !guestbookCount || !dialog || !form || !messageList) return;
 
     const config = window.PORTFOLIO_COMMUNITY_CONFIG || {};
     const client = createCommunityClient(config);
     let messages = [];
-    let turnstileToken = "";
-    let turnstileWidgetId = null;
 
     modeBadges.forEach((badge) => {
         badge.textContent = client.mode === "live" ? "Live" : "Device preview";
@@ -401,38 +374,9 @@ function initializeCommunity() {
         }
     };
 
-    const ensureTurnstile = async () => {
-        if (client.mode !== "live" || !turnstileSlot || turnstileWidgetId !== null) return;
-        turnstileSlot.hidden = false;
-
-        try {
-            const turnstile = await loadTurnstileScript();
-            turnstileWidgetId = turnstile.render(turnstileSlot, {
-                sitekey: config.turnstileSiteKey,
-                theme: "dark",
-                action: "guestbook_post",
-                callback: (token) => {
-                    turnstileToken = token;
-                    setStatus(formStatus, "Anti-spam check complete.", "success");
-                },
-                "expired-callback": () => {
-                    turnstileToken = "";
-                    setStatus(formStatus, "Anti-spam check expired. Please retry it.", "error");
-                },
-                "error-callback": () => {
-                    turnstileToken = "";
-                    setStatus(formStatus, "Anti-spam check could not load.", "error");
-                }
-            });
-        } catch {
-            setStatus(formStatus, "Anti-spam check could not load.", "error");
-        }
-    };
-
     const openGuestbook = () => {
         if (typeof dialog.showModal === "function") dialog.showModal();
         else dialog.setAttribute("open", "");
-        ensureTurnstile();
         window.setTimeout(() => messageInput?.focus(), 0);
     };
 
@@ -471,19 +415,13 @@ function initializeCommunity() {
             return;
         }
 
-        if (client.mode === "live" && !turnstileToken) {
-            setStatus(formStatus, "Complete the anti-spam check before posting.", "error");
-            return;
-        }
-
         submitButton.disabled = true;
         setStatus(formStatus, "Posting note...");
 
         try {
             const posted = await client.postMessage({
                 nickname,
-                message: validation.message,
-                turnstileToken
+                message: validation.message
             });
 
             messages = [posted, ...messages.filter((message) => message.id !== posted.id)]
@@ -500,10 +438,6 @@ function initializeCommunity() {
                 , "success"
             );
 
-            if (client.mode === "live" && window.turnstile && turnstileWidgetId !== null) {
-                window.turnstile.reset(turnstileWidgetId);
-                turnstileToken = "";
-            }
         } catch (error) {
             setStatus(formStatus, error.message || "The note could not be posted.", "error");
         } finally {

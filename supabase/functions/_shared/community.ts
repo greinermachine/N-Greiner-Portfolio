@@ -81,23 +81,3 @@ export async function dailyActorHash(request: Request): Promise<string> {
     const digest = await crypto.subtle.digest("SHA-256", input);
     return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
 }
-
-export async function verifyTurnstile(request: Request, token: string): Promise<boolean> {
-    const secret = Deno.env.get("TURNSTILE_SECRET_KEY");
-    if (!secret) throw new Error("TURNSTILE_SECRET_KEY is not configured.");
-
-    const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            secret,
-            response: token,
-            remoteip: getClientIp(request),
-            idempotency_key: crypto.randomUUID()
-        })
-    });
-
-    if (!response.ok) return false;
-    const result = await response.json() as { success?: boolean; action?: string };
-    return result.success === true && result.action === "guestbook_post";
-}

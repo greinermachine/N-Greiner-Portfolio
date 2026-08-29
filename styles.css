@@ -1817,11 +1817,6 @@ h1 {
     font-size: 0.7rem;
 }
 
-.turnstile-slot:not([hidden]) {
-    display: block;
-    min-height: 65px;
-}
-
 .guestbook-form__actions {
     display: flex;
     gap: 0.9rem;

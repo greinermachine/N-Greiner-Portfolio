@@ -3,13 +3,11 @@ import {
     getAdminClient,
     isAllowedOrigin,
     jsonResponse,
-    preflightResponse,
-    verifyTurnstile
+    preflightResponse
 } from "../_shared/community.ts";
 
 const MAX_BODY_LENGTH = 280;
 const MAX_NICKNAME_LENGTH = 24;
-const MAX_TOKEN_LENGTH = 2048;
 const URL_PATTERN = /(?:https?:\/\/|www\.|\b[a-z0-9-]+\.(?:com|net|org|io|gg|dev|app|co)\b)/i;
 const RESERVED_NICKNAME_PATTERN = /^(?:nicholas(?: greiner)?|nick(?: greiner)?|greinermachine|admin|moderator|site owner)$/i;
 
@@ -62,7 +60,6 @@ Deno.serve(async (request) => {
         const payload = await request.json() as Record<string, unknown>;
         const nickname = normalizeNickname(payload.nickname);
         const validation = validateBody(payload.message);
-        const turnstileToken = typeof payload.turnstileToken === "string" ? payload.turnstileToken : "";
 
         if (nickname.length > MAX_NICKNAME_LENGTH) {
             return jsonResponse(request, { error: "Keep your trail name under 24 characters." }, 400);
@@ -71,12 +68,6 @@ Deno.serve(async (request) => {
             return jsonResponse(request, { error: "That trail name is reserved. Choose another or post anonymously." }, 400);
         }
         if (validation.error) return jsonResponse(request, { error: validation.error }, 400);
-        if (!turnstileToken || turnstileToken.length > MAX_TOKEN_LENGTH) {
-            return jsonResponse(request, { error: "Complete the anti-spam check before posting." }, 400);
-        }
-        if (!await verifyTurnstile(request, turnstileToken)) {
-            return jsonResponse(request, { error: "The anti-spam check was not accepted. Please retry it." }, 400);
-        }
 
         const actorHash = await dailyActorHash(request);
         const { data, error } = await supabase.rpc("submit_guestbook_message", {

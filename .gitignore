@@ -16,6 +16,7 @@ desktop.ini
 
 # Python caches and test/tool output
 __pycache__/
+node_modules/
 *.py[cod]
 .pytest_cache/
 .mypy_cache/
@@ -39,6 +40,7 @@ fungame/ORIGINAL_REQUEST.md
 *.tmp
 *.temp
 /plans
+supabase/.temp/
 
 GAME_INTEGRATION_REPORT.md
 ASSET_MANIFEST.md

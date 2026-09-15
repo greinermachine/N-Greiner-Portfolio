@@ -14,7 +14,11 @@
         <header class="identity">
             <div class="name-line">
                 <h1>Nicholas Greiner</h1>
-                <span class="info-mark" aria-hidden="true">ⓘ</span>
+                <button class="info-mark" id="info-trigger" type="button"
+                    aria-label="Why does this website exist?" aria-haspopup="dialog"
+                    aria-controls="info-panel" aria-expanded="false">
+                    <span aria-hidden="true">ⓘ</span>
+                </button>
             </div>
 
             <div class="discipline">
@@ -69,5 +73,14 @@
             </nav>
         </footer>
     </div>
+
+    <!-- A small editorial note, opened by the info button. -->
+    <dialog class="info-panel" id="info-panel" aria-labelledby="info-title" aria-describedby="info-message">
+        <div class="info-panel-header">
+            <h2 id="info-title">About this website</h2>
+            <button class="info-close" id="info-close" type="button" autofocus>Close</button>
+        </div>
+        <p class="info-message" id="info-message"></p>
+    </dialog>
 </body>
 </html>

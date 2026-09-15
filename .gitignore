@@ -9,6 +9,11 @@ desktop.ini
 .vscode/
 .idea/
 
+assets/
+fungame/
+game/
+supabase/
+
 # Environment and local configuration
 .env
 .env.*
@@ -43,5 +48,6 @@ fungame/ORIGINAL_REQUEST.md
 GAME_INTEGRATION_REPORT.md
 ASSET_MANIFEST.md
 Greiner_Nicholas_Resume.pdf
+COMMUNITY_SETUP.md
 artifacts
 Pictures

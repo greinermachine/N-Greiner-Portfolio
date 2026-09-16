@@ -1,86 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--
+    NN\   NN\  IIIIII\   CCCCCC\   KK\   KK\
+    NNN\  NN | \_II  _| CC  __CC\  KK | KK  |
+    NNNN\ NN |   II |   CC /  \__| KK |KK  /
+    NN NN\NN |   II |   CC |       KKKKK  /
+    NN \NNNN |   II |   CC |       KK  KK<
+    NN |\NNN |   II |   CC |  CC\  KK |\KK\
+    NN | \NN | IIIIII\  \CCCCCC  | KK | \KK\
+    \__|  \__| \______|  \______/  \__|  \__|
+    -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Selected work by Nicholas Greiner. Computer science, machine learning, C++, and robotics at the University of Florida.">
-    <title>Nicholas Greiner — Selected Work</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Nick Greiner's personal home page. Computer science, machine learning, C++, software, and other things that seemed like a good idea at the time.">
+    <title>Nicholas Greiner — Official Home Page</title>
+    <link rel="icon" href="ImageBin/world.gif" type="image/gif">
+    <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="page">
-        <!-- Identity -->
-        <header class="identity">
-            <div class="name-line">
-                <h1>Nicholas Greiner</h1>
-                <button class="info-mark" id="info-trigger" type="button"
-                    aria-label="Why does this website exist?" aria-haspopup="dialog"
-                    aria-controls="info-panel" aria-expanded="false">
-                    <span aria-hidden="true">ⓘ</span>
-                </button>
-            </div>
+    <header>
+        <h1 class="name-heading">
+            <button class="name-switch" id="name-switch" type="button" aria-label="Change the typeface of Nicholas Greiner">
+                <span id="name-text">NICHOLAS GREINER</span>
+                <img id="name-image" src="ImageBin/NicholasGreiner_T1.png" alt="Nicholas Greiner" hidden>
+            </button>
+        </h1>
+        <p><strong>Official Home Page</strong></p>
+        <p>Computer Science — University of Florida <img class="school-gator" src="ImageBin/Gator.png" alt="Florida Gator"></p>
+    </header>
 
-            <div class="discipline">
-                <p>Computer Science</p>
-                <p class="specialties">Machine Learning · C++ · Robotics</p>
-            </div>
+    <hr>
 
-            <p class="affiliation">
-                <span>University of Florida</span>
-                <span class="affiliation-divider" aria-hidden="true">·</span>
-                <span>2027</span>
-            </p>
-        </header>
+    <main>
+        <p>Welcome to my website. <img class="nav-icon" src="ImageBin/welcome.gif" alt="" aria-hidden="true"></p>
+        <p>I'm Nick. I work on machine learning, C++, software,<br>
+            and other things that seemed like a good idea at the time.</p>
+        <img class="GD" src="ImageBin/GOINGDIGITAL.gif" alt="Going Digital">
+        <nav aria-labelledby="navigation-heading">
+            <h2 id="navigation-heading">Navigation</h2>
+            <ul class="directory">
+                <li><a href="#">Selected Projects</a><img class="nav-icon" src="ImageBin/Projects.gif" alt="" aria-hidden="true"></li>
+                <li><a href="#">Research</a><img class="nav-icon" src="ImageBin/Research.gif" alt="" aria-hidden="true"></li>
+                <!-- <li><a href="#">Games</a></li> -->
+                <li><a href="#">Animals</a><img class="nav-icon" src="ImageBin/animals.gif" alt="" aria-hidden="true"></li>
+                <!-- <li><a href="#">Fosters</a></li> -->
+                <li><a href="#">About Me</a><img class="nav-icon" src="ImageBin/aboutme.gif" alt="" aria-hidden="true"></li>
+                <li><a href="Greiner_Nicholas_Resume.pdf">Resume</a><img class="nav-icon" src="ImageBin/resume.gif" alt="" aria-hidden="true"></li>
+                <!-- <li><a href="#">Cool Links</a></li> -->
+                <li><a href="https://github.com/greinermachine">GitHub</a><img class="nav-icon" src="ImageBin/github.gif" alt="" aria-hidden="true"></li>
+                <!-- <li><a href="#">Miscellaneous</a></li> -->
+            </ul>
+        </nav>
 
-        <!-- Selected work: static rows for this first iteration. -->
-        <main>
-            <section aria-labelledby="work-title">
-                <h2 class="section-label" id="work-title">Selected Work</h2>
-                <ol class="project-list" role="list">
-                    <li class="project-row">
-                        <span class="project-number" aria-hidden="true">01</span>
-                        <h3 class="project-title">OpenVLA Failure Prediction</h3>
-                        <time class="project-year" datetime="2026">2026</time>
-                    </li>
-                    <li class="project-row">
-                        <span class="project-number" aria-hidden="true">02</span>
-                        <h3 class="project-title">Attribution-Based OOD Detection</h3>
-                        <time class="project-year" datetime="2026">2025</time>
-                    </li>
-                    <li class="project-row">
-                        <span class="project-number" aria-hidden="true">03</span>
-                        <h3 class="project-title">Classic ML in C++</h3>
-                        <time class="project-year" datetime="2026">2026</time>
-                    </li>
-                    <li class="project-row">
-                        <span class="project-number" aria-hidden="true">04</span>
-                        <h3 class="project-title">PvZRL</h3>
-                        <time class="project-year" datetime="2026">2026</time>
-                    </li>
-                </ol>
-            </section>
-        </main>
+        <hr>
 
-        <!-- About remains a label until its content is designed. -->
-        <footer class="site-footer">
-            <nav aria-label="Elsewhere">
-                <ul class="footer-links" role="list">
-                    <li><span>About</span></li>
-                    <li><a href="https://github.com/greinermachine">GitHub</a></li>
-                    <li><a href="Greiner_Nicholas_Resume.pdf">Resume</a></li>
-                </ul>
-            </nav>
-        </footer>
-    </div>
+        <section aria-labelledby="currently-heading">
+            <h2 id="currently-heading">Currently</h2>
+            <p>Trying to make robots know when they're about to screw up.</p>
+        </section>
 
-    <!-- A small editorial note, opened by the info button. -->
-    <dialog class="info-panel" id="info-panel" aria-labelledby="info-title" aria-describedby="info-message">
-        <div class="info-panel-header">
-            <h2 id="info-title">About this website</h2>
-            <button class="info-close" id="info-close" type="button" autofocus>Close</button>
-        </div>
-        <p class="info-message" id="info-message"></p>
-    </dialog>
+        <section aria-labelledby="projects-heading">
+            <h2 id="projects-heading">Projects of Note</h2>
+            <ul>
+                <li><a href="#">Gator++</a></li>
+                <li><a href="#">NumberSense</a></li>
+                <li><a href="#">Machine Learning in C++</a></li>
+                <li><a href="#">PvZRL</a></li>
+            </ul>
+        </section>
+
+        <!-- A fixed number, maintained with absolutely no statistical rigor. -->
+        <aside class="visitor-counter" aria-label="Visitor counter">
+            <p>You are visitor:</p>
+            <p><samp>00000017</samp></p>
+            <p><small>probably</small></p>
+        </aside>
+    </main>
+
+    <img class="footer-eyes" src="ImageBin/eyes.gif" alt="" aria-hidden="true">
+
+    <footer>
+        <p>This page is handcrafted, I think?.</p>
+        <p>Built using advanced technologies including HTML CSS, and JAVASCRIPT.</p>
+        <img class="BVWC" src="ImageBin/BVWC.gif" alt="Best Viewed Wih Computer">
+    </footer>
 </body>
 </html>

@@ -1,0 +1,208 @@
+/* Plain type and a page width that still fits a phone. */
+:root {
+    color-scheme: light;
+}
+
+body {
+    max-width: 42rem;
+    margin: 1.5rem auto;
+    padding: 0 1.25rem;
+    background: #faf9f3;
+    color: #111;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 1rem;
+    line-height: 1.45;
+}
+
+header,
+footer {
+    text-align: center;
+}
+
+h1 {
+    margin: 0 0 0.5rem;
+    font-size: 1.875rem;
+    line-height: 1.2;
+}
+
+.name-heading {
+    font-size: 0;
+}
+
+.name-switch {
+    display: inline-block;
+    max-width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+}
+
+.name-text {
+    display: inline-block;
+    font-size: 1.875rem;
+    line-height: 1.2;
+}
+
+.name-switch img {
+    display: block;
+    width: auto;
+    height: 3rem;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.name-switch img[hidden] {
+    display: none;
+}
+
+.name-switch:focus-visible {
+    outline: 1px dotted currentColor;
+    outline-offset: 5px;
+}
+
+.name-switch:active {
+    opacity: 0.8;
+}
+
+header p {
+    margin: 0.25rem 0;
+}
+/*- image collection */
+.school-gator {
+    display: inline-block;
+    margin-left: 0.15rem;
+    width: 2.25rem;
+    height: auto;
+    vertical-align: -0.35rem;
+    mix-blend-mode: multiply;
+}
+.BVWC {
+    display: inline-block;
+    width: 6.9rem;
+    height: auto;
+    vertical-align: -0.35rem;
+    mix-blend-mode: multiply;
+}
+.GD {
+    display: inline-block;
+    width: 25rem;
+    height: auto;
+    vertical-align: -0.35rem;
+    mix-blend-mode: multiply;
+}
+.nav-icon {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: 0.35rem;
+    object-fit: contain;
+    vertical-align: -0.3rem;
+}
+/*end*/
+
+h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+p {
+    margin: 0.75rem 0;
+}
+
+hr {
+    margin: 1.5rem 0;
+    border: 0;
+    border-top: 1px solid #b8b8af;
+}
+
+nav,
+section {
+    margin-block: 1.5rem;
+}
+
+ul {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+li {
+    margin-bottom: 0.35rem;
+}
+
+a:link {
+    color: #0000ee;
+}
+
+a:visited {
+    color: #551a8b;
+}
+
+a {
+    text-decoration: underline;
+}
+
+a:focus-visible {
+    outline: 1px dotted currentColor;
+    outline-offset: 3px;
+}
+
+/* A short directory, read down each column like an old links page. */
+.directory {
+    column-count: 2;
+    column-gap: 3rem;
+}
+
+.directory li {
+    break-inside: avoid;
+}
+
+/* It is fake. The number is plain text in index.html. */
+.visitor-counter {
+    margin: 1.75rem 0;
+    text-align: center;
+    font-size: 0.875rem;
+}
+
+.visitor-counter p {
+    margin: 0.2rem 0;
+}
+
+.visitor-counter samp {
+    display: inline-block;
+    padding: 0.125rem 0.375rem;
+    border: 2px inset #888;
+    background: #222;
+    color: #f5f5ed;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+}
+
+footer {
+    color: #444;
+    font-size: 0.8125rem;
+}
+
+footer p {
+    margin: 0.25rem 0;
+}
+
+.footer-eyes {
+    display: block;
+    width: min(350px, 100%);
+    height: auto;
+    margin: 1.5rem auto;
+}
+
+@media (max-width: 30rem) {
+    .name-switch img {
+        height: 2.75rem;
+    }
+
+    .directory {
+        column-count: 1;
+    }
+}

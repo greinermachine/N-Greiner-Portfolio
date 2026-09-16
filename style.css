@@ -5,7 +5,8 @@
 
 body {
     max-width: 42rem;
-    margin: 1.5rem auto;
+    /* Keep the document narrow and just left of the viewport's center. */
+    margin: 1.5rem 0 1.5rem max(1.25rem, calc(50vw - 25rem));
     padding: 0 1.25rem;
     background: #faf9f3;
     color: #111;
@@ -159,6 +160,136 @@ a:focus-visible {
     break-inside: avoid;
 }
 
+/* The project index uses spacing and links instead of cards. */
+.project-list {
+    margin: 1.5rem 0;
+    padding: 0;
+    list-style: none;
+}
+
+.project-entry + .project-entry {
+    margin-top: 2.25rem;
+}
+
+.project-title {
+    margin-bottom: 0.35rem;
+    font-size: 1.25rem;
+    text-transform: none;
+}
+
+.project-entry p {
+    margin: 0.5rem 0;
+}
+
+.project-tech {
+    color: #444;
+    font-size: 0.9rem;
+}
+
+.project-links {
+    margin-top: 0.75rem;
+}
+
+.project-links a {
+    display: inline-block;
+    margin-right: 0.85rem;
+    margin-bottom: 0.25rem;
+}
+
+.project-links a:last-child {
+    margin-right: 0;
+}
+
+.CM {
+    display: inline-block;
+    width: 2.5rem;
+    height: 1.25rem;
+    vertical-align: -0.3rem;
+}
+.CM-hand {
+    display: inline-block;
+    width: 2.5rem;
+    height: 1.25rem;
+    vertical-align: -0.3rem;
+    margin-left: 0.25rem;
+}
+
+.other-projects {
+    margin-top: 0.5rem;
+}
+
+.project-home {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.home-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.home-link img {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+}
+
+.pointer-hand-placeholder {
+    display: none;
+    width: 2rem;
+    height: 1.25rem;
+}
+
+.pointer-hand {
+    --hand-angle: 0deg;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 1.25rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.pointer-hand img {
+    display: block;
+    width: 2rem;
+    height: auto;
+    transform: rotate(var(--hand-angle));
+    transform-origin: center;
+}
+
+.pointer-hand:focus-visible {
+    outline: 1px dotted currentColor;
+    outline-offset: 3px;
+}
+
+.project-home.hand-floating .pointer-hand {
+    position: fixed;
+    top: 1rem;
+    left: var(--hand-left);
+    z-index: 2;
+}
+
+.project-home.hand-floating .pointer-hand-placeholder {
+    display: inline-block;
+}
+
+.oldweb-badge-wrap {
+    margin: 1.25rem 0;
+}
+
+.oldweb-badge {
+    display: inline-block;
+    width: 4rem;
+    height: auto;
+}
+
 /* It is fake. The number is plain text in index.html. */
 .visitor-counter {
     margin: 1.75rem 0;
@@ -197,6 +328,32 @@ footer p {
     margin: 1.5rem auto;
 }
 
+/* Screenshot previews for project headings and featured project links. */
+.hover-container {
+  position: relative; /* Keeps the absolute image positioned near the title */
+  display: inline-block;
+}
+
+.hover-image {
+  display: none; /* Hide the screenshot by default */
+  position: absolute;
+  top: 100%; /* Places the screenshot directly below the h2 */
+  left: 0;
+  width: 300px; /* Adjust the preview size as needed */
+  border: 1px solid #ccc;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+/* Show the screenshot on hover or keyboard focus. */
+.hover-container:hover .hover-image,
+.hover-container:focus-visible .hover-image {
+  display: block; 
+}
+
+
+
+
 @media (max-width: 30rem) {
     .name-switch img {
         height: 2.75rem;
@@ -205,4 +362,19 @@ footer p {
     .directory {
         column-count: 1;
     }
+
+    .pointer-hand,
+    .pointer-hand img {
+        width: 1.75rem;
+    }
+
+    .project-home.hand-floating .pointer-hand {
+        position: static;
+    }
+
+    .project-home.hand-floating .pointer-hand-placeholder {
+        display: none;
+    }
 }
+
+

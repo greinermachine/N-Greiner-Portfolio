@@ -288,6 +288,11 @@ a:focus-visible {
     z-index: 2;
 }
 
+.project-home-bottom.hand-floating .pointer-hand {
+    top: auto;
+    bottom: 1rem;
+}
+
 .project-home.hand-floating .pointer-hand-placeholder {
     display: inline-block;
 }
@@ -389,4 +394,302 @@ footer p {
     }
 }
 
+/* PROJECTS PAGE: tiny Windows-95-style toolbar buttons for project links. */
+.project-tools {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.3rem;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+}
 
+.project-tool {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    min-height: 1.5rem;
+    padding: 0.2rem 0.35rem;
+    border: 2px outset #dfdfdf;
+    background: #c0c0c0;
+    color: #000;
+    font-family: Arial, sans-serif;
+    font-size: 0.7rem;
+    font-weight: normal;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.project-tool:link,
+.project-tool:visited {
+    color: #000;
+    text-decoration: none;
+}
+
+.project-tool:hover {
+    background: #d4d4d4;
+}
+
+.project-tool:active {
+    border-style: inset;
+}
+
+.project-tool:focus-visible {
+    outline: 1px dotted currentColor;
+    outline-offset: 2px;
+}
+
+.project-tool img,
+.project-tool .project-icons {
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+    margin: 0;
+    object-fit: contain;
+}
+
+.project-tool-static {
+    cursor: default;
+}
+
+/*
+   CSS map:
+   - shared document and link rules live above this note;
+   - homepage selectors include .name-*, .directory, and the home image collection;
+   - project-index selectors include .project-*, .pointer-hand*, and .hover-*;
+   - research-page selectors are grouped below and scoped to .research-page where practical.
+*/
+
+/* RESEARCH PAGE: one plain document with experiment sections and presentation links. */
+.research-page h2 {
+    font-size: 1.25rem;
+    line-height: 1.3;
+}
+
+.research-number {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.research-page h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.research-status,
+.research-scale,
+.research-pipeline {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.875rem;
+}
+
+.research-status {
+    margin-top: 0.5rem;
+}
+
+.research-question {
+    font-size: 1.125rem;
+}
+
+.research-note,
+.research-pending {
+    color: #444;
+    font-size: 0.875rem;
+}
+
+.research-facts {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    gap: 0.5rem 1rem;
+    margin: 0.75rem 0;
+}
+
+.research-facts dt,
+.research-tasks dt {
+    font-weight: bold;
+}
+
+.research-facts dd {
+    margin: 0;
+}
+
+.research-tasks dd {
+    margin: 0.25rem 0 1rem;
+}
+
+.research-phases {
+    padding-left: 1.5rem;
+}
+
+.research-phases li + li {
+    margin-top: 0.75rem;
+}
+
+.research-pipeline {
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+    line-height: 1.4;
+    tab-size: 2;
+}
+
+.research-page figcaption {
+    margin-top: 0.4rem;
+    font-size: 0.875rem;
+}
+
+.research-infographic {
+    max-width: 100%;
+    margin: 1.25rem 0;
+}
+
+.research-infographic img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.research-terminal-graphic {
+    max-width: 100%;
+}
+
+.research-environment-graphic {
+    max-width: 22rem;
+}
+
+.research-presentation-links a {
+    display: inline-block;
+    margin: 0 0.75rem 0.35rem 0;
+}
+
+.research-disclosure {
+    margin: 1.25rem 0;
+    padding-top: 0.75rem;
+    border-top: 1px solid #b8b8af;
+}
+
+.research-disclosure summary {
+    color: #0000ee;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.research-disclosure summary strong {
+    font-weight: normal;
+}
+
+.research-disclosure summary span {
+    display: block;
+    margin-top: 0.2rem;
+    color: #444;
+    font-size: 0.875rem;
+    text-decoration: none;
+}
+
+.research-current-step {
+    padding-left: 0.75rem;
+    border-left: 2px solid #99998f;
+}
+
+.research-current-step summary strong {
+    font-weight: bold;
+}
+
+.research-page summary:focus-visible {
+    outline: 1px dotted currentColor;
+    outline-offset: 4px;
+}
+
+
+.research-page button:focus-visible,
+.research-pipeline:focus-visible {
+    outline: 1px dotted currentColor;
+    outline-offset: 4px;
+}
+
+/* Research image viewer: native dialog semantics and Escape, with a small keyboard loop in research.js. */
+.research-viewer {
+    box-sizing: border-box;
+    width: fit-content;
+    max-width: calc(100% - 2rem);
+    max-height: calc(100dvh - 2rem);
+    padding: 1rem;
+    border: 1px solid #555;
+    background: #faf9f3;
+    color: #111;
+    overflow: auto;
+    overscroll-behavior: contain;
+}
+
+.research-viewer::backdrop {
+    background: rgb(0 0 0 / 65%);
+}
+
+.research-dialog-open {
+    overflow: hidden;
+    scrollbar-gutter: stable;
+}
+
+.research-viewer form {
+    margin-bottom: 0.75rem;
+    text-align: right;
+}
+
+.research-viewer button {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid #888;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+.research-viewer figure {
+    margin: 0;
+}
+
+.research-viewer img {
+    display: block;
+    max-width: 100%;
+    max-height: 72dvh;
+    width: auto;
+    height: auto;
+    margin: auto;
+    object-fit: contain;
+}
+
+.research-viewer [hidden] {
+    display: none;
+}
+
+.research-viewer p {
+    margin-bottom: 0;
+    font-size: 0.875rem;
+}
+
+@media (max-width: 30rem) {
+    .research-facts {
+        grid-template-columns: 1fr;
+        gap: 0.15rem;
+    }
+
+    .research-facts dd {
+        margin-bottom: 0.75rem;
+    }
+
+}
+
+/* Research introduces no motion. Keep its existing decorative door still when requested. */
+@media (prefers-reduced-motion: reduce) {
+    .research-page .home-link img {
+        display: none;
+    }
+
+    .research-page .home-link::after {
+        content: "[home]";
+    }
+}

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nicholas Greiner's research on near-terminal warning in vision-language-action models and attribution-based out-of-distribution detection.">
+    <title>Research — Nicholas Greiner</title>
+    <link rel="icon" href="ImageBin/world.gif" type="image/gif">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <script src="research.js" defer></script>
+</head>
+<body class="research-page">
+    <header>
+        <h1>RESEARCH</h1>
+    </header>
+
+    <hr>
+
+    <main>
+        <p class="project-home project-home-top">
+            <a class="home-link" href="index.html">
+                <img src="ImageBin/BlurMetalLe.gif" alt="Home">
+            </a>
+        </p>
+
+        <p>Machine learning reliability, interpretability,<br>
+            and robots that occasionally make poor decisions.</p>
+        <p>University of Florida<br>
+            Undergraduate AI Research Assistant<br>
+            2025 — present</p>
+
+        <hr>
+
+        <section class="research-project" aria-labelledby="vla-heading">
+            <h2 id="vla-heading"><span class="research-number">01.</span>
+                ACTIVATION-BASED FAILURE WARNING IN<br>
+                VISION-LANGUAGE-ACTION MODELS</h2>
+            <p class="research-status">[IN PROGRESS]</p>
+
+            <section aria-labelledby="vla-question">
+                <h3 id="vla-question">Research question</h3>
+                <p class="research-question">Do activation-based warning signals for VLA task failure remain predictive on unseen rollout initializations and under changed visual conditions?</p>
+                <p>Vision-language-action models can continue producing plausible robot actions even as a rollout moves toward failure. This work studies whether internal OpenVLA activations contain signals that indicate an approaching task failure before the episode terminates.</p>
+                <p>The current experiments use OpenVLA rollouts in LIBERO-Spatial. The immediate goal is to determine whether a lightweight probe trained on internal activations can predict near-terminal failure and whether that signal generalizes beyond the rollout initializations used during training.</p>
+                <figure class="research-infographic">
+                    <img src="ImageBin/VLAResearch.png" alt="Experiment overview: OpenVLA rollouts, activation signals, near-terminal labels, probe training, and held-out initialization testing">
+                    <figcaption>Experiment overview.</figcaption>
+                </figure>
+            </section>
+
+            <section aria-labelledby="vla-setup">
+                <h3 id="vla-setup">Current setup</h3>
+                <dl class="research-facts">
+                    <dt>Model</dt>
+                    <dd>OpenVLA-7B, fine-tuned on LIBERO-Spatial</dd>
+                    <dt>Environment</dt>
+                    <dd>LIBERO-Spatial robotic manipulation tasks</dd>
+                    <dt>Primary signal</dt>
+                    <dd>Hidden activations collected from OpenVLA during each rollout</dd>
+                    <dt>Additional rollout data</dt>
+                    <dd>Predicted robot actions, end-effector state, gripper state, rewards, and episode outcomes</dd>
+                    <dt>Conditions</dt>
+                    <dd>Clean observations and controlled visual-shift observations</dd>
+                </dl>
+                <figure class="research-infographic research-environment-graphic">
+                    <img src="ImageBin/VLAResearchENV.gif" alt="Animated LIBERO rollout environment with episode state and target information">
+                    <figcaption>LIBERO rollout environment example.</figcaption>
+                </figure>
+            </section>
+
+            <section aria-labelledby="vla-method">
+                <h3 id="vla-method">Methodology</h3>
+                <p>OpenVLA is run across repeated LIBERO-Spatial rollouts with multiple task initializations. Internal activations and rollout state are recorded at each timestep.</p>
+                <p>The experiment then converts each rollout into labeled timestep examples:</p>
+                <ul>
+                    <li><strong>Positive:</strong> failure occurs within the next 15 steps</li>
+                    <li><strong>Excluded:</strong> the timestep is 16–45 steps before failure</li>
+                    <li><strong>Far negative:</strong> the timestep is more than 45 steps from failure</li>
+                    <li><strong>Terminal failure step:</strong> excluded from the prediction task</li>
+                </ul>
+                <p>A lightweight logistic or linear probe is trained on the activation vectors to estimate the probability of near-terminal failure.</p>
+                <p>Episodes are kept intact during train/test splitting so that timesteps from the same rollout cannot appear in both sets. The current generalization experiment evaluates the probe on held-out rollout initializations that were not used during training.</p>
+            </section>
+
+            <section aria-labelledby="vla-tasks">
+                <h3 id="vla-tasks">Near-terminal warning</h3>
+                <p>At timestep <em>t</em>:</p>
+                <p class="research-question">Will this rollout fail within the next 15 steps?</p>
+                <p>This is a near-terminal warning task, not an attempt to identify the first mistake made by the robot.</p>
+                <p>For a failed rollout, timesteps immediately preceding failure receive positive labels. Timesteps farther from failure provide negative examples, while an intermediate buffer region is excluded to create a clearer separation between warning and non-warning states.</p>
+                <p>Successful episodes contribute negative examples because no task failure occurs during the rollout.</p>
+                <figure class="research-infographic research-terminal-graphic">
+                    <img src="ImageBin/NTWTI.png" alt="Near-terminal warning label rules for predicting whether a rollout will fail within the next 15 steps">
+                    <figcaption>Near-terminal warning label rules.</figcaption>
+                </figure>
+            </section>
+
+            <details class="research-disclosure research-current-step">
+                <summary>
+                    <strong>Current step: episode labeling</strong>
+                    <span>Constructing timestep-level warning labels while preserving episode identity.</span>
+                </summary>
+                <p>The current focus is making the failure-prediction dataset well defined before drawing conclusions from probe performance.</p>
+                <p>Each rollout is processed as a complete episode. Its final task outcome and timestep information are used to assign near-terminal labels to the activation vectors collected during the rollout.</p>
+                <p>The labeling scheme is intentionally conservative:</p>
+                <ul>
+                    <li>steps within <strong>15 timesteps of failure</strong> are warning examples;</li>
+                    <li>steps <strong>16–45 timesteps before failure</strong> are excluded;</li>
+                    <li>steps <strong>more than 45 timesteps from failure</strong> are treated as far-negative examples;</li>
+                    <li>the terminal failure step itself is excluded.</li>
+                </ul>
+                <p>This produces the timestep-level dataset used to train and evaluate the activation probe while preserving the identity of the rollout each sample came from.</p>
+            </details>
+
+            <details class="research-disclosure">
+                <summary>
+                    <strong>Generalization evaluation</strong>
+                    <span>Testing whether activation probes remain predictive on previously unseen rollout initializations.</span>
+                </summary>
+                <p>The main question is not only whether failure is linearly decodable from OpenVLA activations, but whether the learned warning signal survives a change in rollout initialization.</p>
+                <p>The evaluation therefore separates complete episodes into training and testing groups and measures performance on previously unseen rollout initializations.</p>
+                <p>The same framework can then be used to compare:</p>
+                <ul>
+                    <li>clean → clean generalization;</li>
+                    <li>visual shift → visual shift generalization;</li>
+                    <li>clean → visual shift transfer;</li>
+                    <li>visual shift → clean transfer.</li>
+                </ul>
+            </details>
+
+            <details class="research-disclosure">
+                <summary>
+                    <strong>Future direction</strong>
+                    <span>Testing whether similar warning signals appear across VLA architectures.</span>
+                </summary>
+                <p>Longer term, the goal is to test whether similar activation-based warning signals appear across different VLA architectures.</p>
+            </details>
+
+            <section class="research-presentation" aria-labelledby="vla-presentation">
+                <h3 id="vla-presentation">Current research presentation</h3>
+                <p class="research-status">work in progress</p>
+                <p><strong>Activation-Based Failure Warning Signals in Vision-Language-Action Models</strong></p>
+                <p class="research-note">Presentation is being revised to reflect the current experiment.</p>
+                <p class="research-presentation-links">
+                    <span class="research-pending">[view presentation — PDF pending]</span>
+                    <!-- Once exported, replace the pending span with:
+                    <a href="research/vla-presentation.pdf" target="_blank" rel="noopener">[view presentation]</a>
+                    <a href="research/vla-presentation.pdf" download>[download PDF]</a>
+                    -->
+                </p>
+
+            </section>
+        </section>
+
+        <hr>
+
+        <section class="research-project" aria-labelledby="xai-heading">
+            <h2 id="xai-heading"><span class="research-number">02.</span>
+                ATTRIBUTION-BASED<br>
+                OUT-OF-DISTRIBUTION DETECTION</h2>
+            <p class="research-status">[COMPLETED]</p>
+            <p class="research-note">Attribution-Based Confidence and Perception Contract Adherence</p>
+            <p><strong>My role:</strong> Project lead and primary contributor.<br>
+                <span class="research-note">Collaborator: Caio Miyake, and Karla Tran | Mentor: Chase Walker.</span></p>
+
+            <section aria-labelledby="xai-question">
+                <h3 id="xai-question">Research question</h3>
+                <p class="research-question">Can attribution maps serve as reliable indicators<br>
+                    for detecting out-of-distribution data?</p>
+                <p>A vision classifier can give a confident answer to an image that belongs to none of its training classes. Confidence alone does not necessarily tell us that the input is unfamiliar.</p>
+                <p>This project investigates whether the pattern of pixels contributing to a prediction provides an additional signal. Attribution maps from familiar and unfamiliar inputs become the input to a second classifier, which learns to distinguish in-distribution (ID) from out-of-distribution (OOD) examples.</p>
+            </section>
+
+            <details class="research-disclosure">
+                <summary>
+                    <strong>Approach</strong>
+                    <span>Comparing attribution-map detectors, extracted features, and perturbation-based signals.</span>
+                </summary>
+                <p>I explored several ways to build that detector: training a ResNet directly on attribution maps, extracting numerical features from those maps and training an MLP, and adding uncertainty and perturbation-based features. I also changed the ID / OOD class selections and compared separate near-OOD and far-OOD detectors with a detector trained on both.</p>
+                <ol class="research-phases">
+                    <li><strong>Phase 1 — Setup &amp; baseline classifier.</strong> Define the distribution split, then train and evaluate the image classifier on ID classes.</li>
+                    <li><strong>Phase 2 — Generate attribution maps.</strong> Produce and save explanations for ID, near-OOD, and far-OOD images.</li>
+                    <li><strong>Phase 3 — Train the ID / OOD detector.</strong> Build separate train, validation, and test sets; compare detectors using the maps and derived features.</li>
+                </ol>
+            </details>
+
+            <details class="research-disclosure">
+                <summary>
+                    <strong>Data splits and evaluation setups</strong>
+                    <span>Testing ID, near-OOD, far-OOD, and additional unseen-class detector splits.</span>
+                </summary>
+                <dl class="research-facts">
+                    <dt>ID</dt>
+                    <dd>Classes represented during the original image classifier's training.</dd>
+                    <dt>Near-OOD</dt>
+                    <dd>Unseen classes that look similar to the ID classes.</dd>
+                    <dt>Far-OOD</dt>
+                    <dd>Unseen classes that are more visually distinct from the ID classes.</dd>
+                </dl>
+                <p>The ImageNet setup selected 10 ID classes, 10 near-OOD classes, and 10 far-OOD classes. I constructed train, validation, and test subsets for several detector setups:</p>
+                <ul>
+                    <li><strong>Separate detectors:</strong> train and evaluate individual models for ID vs. near-OOD, ID vs. far-OOD, and ID vs. both OOD groups.</li>
+                    <li><strong>One combined detector:</strong> train on both OOD groups, then evaluate the same model on near-OOD, far-OOD, and the combined set.</li>
+                    <li><strong>Additional unseen classes:</strong> build new near-OOD and far-OOD sets containing classes and images the OOD detector was not trained on.</li>
+                </ul>
+                <p class="research-note">OOD is defined relative to the original image classifier. An OOD detector can still see examples from those classes during its own training, which is why the additional unseen-class evaluation is a separate check.</p>
+            </details>
+
+            <details class="research-disclosure">
+                <summary>
+                    <strong>Models and attribution methods</strong>
+                    <span>Testing ResNet detectors, attribution methods, and attribution-derived inputs.</span>
+                </summary>
+                <dl class="research-tasks">
+                    <dt>Image classification and map-based detection</dt>
+                    <dd>ResNet-18 and ResNet-50 experiments, including a ResNet-50 image classifier and a separate ResNet-18 trained directly on attribution maps to predict ID / OOD.</dd>
+                    <dt>Attribution methods</dt>
+                    <dd>Integrated Gradients and Guided Backpropagation, with generated maps for ID, near-OOD, and far-OOD images. The pipeline produced tens of thousands of attribution maps from ImageNet-1K class subsets.</dd>
+                    <dt>Feature-based detection</dt>
+                    <dd>Multilayer perceptrons (MLPs) trained on numerical feature vectors extracted from attribution maps, with successive experiments expanding what each vector describes.</dd>
+                </dl>
+            </details>
+
+            <details class="research-disclosure">
+                <summary>
+                    <strong>Pipeline</strong>
+                    <span>Following images through classification, attribution, and ID/OOD detection.</span>
+                </summary>
+                <pre class="research-pipeline" tabindex="0" aria-label="An image classifier and attribution method produce an attribution map. The map goes directly to a ResNet-18 detector, or is converted into numerical features for an MLP. Both routes predict ID versus OOD.">image
+  |
+  v
+classifier / prediction
+  |
+  v
+attribution method
+  |
+  v
+attribution map
+  |
+  +--&gt; ResNet-18 detector
+  |
+  +--&gt; extracted features
+          |
+          v
+         MLP
+
+both detector routes
+  |
+  v
+ID / OOD</pre>
+            </details>
+
+            <details class="research-disclosure">
+                <summary>
+                    <strong>Feature extraction experiments</strong>
+                    <span>Training MLPs on progressively expanded attribution feature sets.</span>
+                </summary>
+                <p>Alongside learning directly from the maps, I trained MLP detectors on progressively expanded feature sets. Each version tested a different way of representing the attribution pattern and the original classifier's response.</p>
+                <dl class="research-tasks">
+                    <dt>24 features — attribution statistics</dt>
+                    <dd>Per-channel statistics such as minimum, maximum, mean, standard deviation, and fraction of positive attributions, plus global summaries including norms, spatial entropy, and concentration in the most strongly attributed pixels.</dd>
+                    <dt>55 features — spatial and distributional structure</dt>
+                    <dd>Expand the baseline with skewness, kurtosis, spatial descriptors, discrete cosine transform features, gradients, sparsity, and dynamic range.</dd>
+                    <dt>58 features — classifier uncertainty</dt>
+                    <dd>Add target-class confidence, softmax entropy, and target margin to the attribution-derived features.</dd>
+                    <dt>61 features — perturbation-based signals</dt>
+                    <dd>Add GARI, GARD, and their combined GAROD score: features examining the model's response to changes in background pixels and pixels identified as important.</dd>
+                    <dt>583 features — descriptions across classes</dt>
+                    <dd>Repeat the 58-feature extraction for all 10 classifier classes, then append the three GAROD-based features.</dd>
+                </dl>
+                <p>The MLP experiments used batch normalization, GELU activations, dropout, AdamW, learning-rate scheduling, and early stopping. The map-based detector also used class-balanced sampling and normalization based on ID attribution statistics.</p>
+            </details>
+
+            <!-- <section class="research-presentation" aria-labelledby="xai-presentation">
+                <h3 id="xai-presentation">Research presentation</h3>
+                <p><strong>Attribution-Based Confidence and Perception Contract Adherence</strong></p>
+                <p>75 slides</p>
+                <p class="research-presentation-links">
+                    <span class="research-pending">[open PDF — pending]</span>
+
+
+
+                    After the deck touch-ups, replace the pending span with:
+                    <a href="research/xai-presentation.pdf" target="_blank" rel="noopener">[open PDF]</a>
+                    <a href="research/xai-presentation.pdf" download>[download PDF]</a>
+                </p>
+
+
+            </section> -->
+        </section>
+
+        <hr>
+
+        <section aria-labelledby="publications-heading">
+            <h2 id="publications-heading">PUBLICATIONS</h2>
+            <p>None.</p>
+            <p>This section is currently extremely easy to maintain.</p>
+        </section>
+
+        <hr>
+
+        <p class="project-home">
+            <a class="home-link" href="index.html">
+                <img src="ImageBin/BlurMetalLe.gif" alt="Home">
+            </a>
+        </p>
+    </main>
+
+    <!-- Shared viewer retained for future figure links. Direct image links will still work without JavaScript. -->
+    <dialog class="research-viewer" id="research-viewer" aria-labelledby="research-viewer-caption">
+        <form method="dialog">
+            <button type="submit" autofocus>[close]</button>
+        </form>
+        <figure>
+            <img id="research-viewer-image" alt="" hidden>
+            <figcaption id="research-viewer-caption">Research image</figcaption>
+        </figure>
+        <p class="research-viewer-error" role="status" hidden>This preview could not be loaded. Use the original image link below.</p>
+        <p><a id="research-viewer-original" target="_blank" rel="noopener">[open original image]</a></p>
+    </dialog>
+</body>
+</html>

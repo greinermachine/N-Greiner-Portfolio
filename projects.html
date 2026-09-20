@@ -8,6 +8,7 @@
     <link rel="icon" href="ImageBin/world.gif" type="image/gif">
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
+    <script src="projects.js" defer></script>
 </head>
 <body>
     <header>
@@ -17,16 +18,17 @@
     <hr>
 
     <main>
-        <p>A few things I've built.</p>
-        <p class="project-home" id="project-home">
+
+        <p class="project-home project-home-top" data-pointer-side="top">
             <a class="home-link" href="index.html">
                 <img src="ImageBin/BlurMetalLe.gif" alt="Home">
             </a>
-            <span class="pointer-hand-placeholder" id="pointer-hand-placeholder" aria-hidden="true"></span>
-            <button class="pointer-hand" id="pointer-hand" type="button" aria-label="Return to pointer location">
+            <span class="pointer-hand-placeholder" aria-hidden="true"></span>
+            <button class="pointer-hand" type="button" aria-label="Point to the home link">
                 <img src="ImageBin/handL-small.gif" alt="" aria-hidden="true">
             </button>
         </p>
+        <p>A few things I've built.</p>
 
         <!-- The featured projects stay in one readable document-like list. -->
         <section class="project-index" aria-label="Featured projects">
@@ -52,9 +54,20 @@
                     <div class="hover-container">
                         <h2 class="project-title">02. NumberSense
                             <!-- https://x.com/czfortythree FOR THE ASSETS -->
-                            <a href="https://www.youtube.com/watch?v=Ngy4qFJzkAs"><img class="project-icons"src="ImageBin/YT.png" alt="Youtube Logo"></a>
-                            <a href="https://github.com/greinermachine/NumberSense"><img class="project-icons"src="ImageBin/GH.png" alt="Github Logo"></a>
-                            <a href="https://number-sense-sigma.vercel.app"><img class="project-icons play-special" src="Imagebin/Play.png" alt="Play Logo"></a>
+                            <span class="project-tools" aria-label="NumberSense links">
+                                <a class="project-tool" href="https://www.youtube.com/watch?v=Ngy4qFJzkAs">
+                                    <img class="project-icons" src="ImageBin/YT.png" alt="" aria-hidden="true">
+                                    <span>YouTube</span>
+                                </a>
+                                <a class="project-tool" href="https://github.com/greinermachine/NumberSense">
+                                    <img class="project-icons" src="ImageBin/GH.png" alt="" aria-hidden="true">
+                                    <span>GitHub</span>
+                                </a>
+                                <a class="project-tool" href="https://number-sense-sigma.vercel.app">
+                                    <img class="project-icons" src="ImageBin/Play.png" alt="" aria-hidden="true">
+                                    <span>Play</span>
+                                </a>
+                            </span>
 
                         </h2>
                         <img class="hover-image" src="ImageBin/NumberSense.png" alt="NumberSense" aria-hidden="true">
@@ -71,9 +84,17 @@
                 <li class="project-entry">
                     <div class="hover-container">
                         <h2 class="project-title">03. Classic ML in C++ 
-                            <!-- https://x.com/czfortythree FOR THE ASSETS -->                       
-                        <a href="https://www.youtube.com/watch?v=d7qRxMlINyo&list=PLO_0lLxEEv9o"><img class="project-icons"src="ImageBin/YT.png" alt="Youtube Logo"></a>
-                        <a href="https://github.com/greinermachine/Classical_ML_CPP"><img class="project-icons"src="ImageBin/GH.png" alt="Github Logo"></a>
+                            <!-- https://x.com/czfortythree FOR THE ASSETS -->
+                        <span class="project-tools" aria-label="Classic ML in C++ links">
+                            <a class="project-tool" href="https://www.youtube.com/watch?v=d7qRxMlINyo&list=PLO_0lLxEEv9o">
+                                <img class="project-icons" src="ImageBin/YT.png" alt="" aria-hidden="true">
+                                <span>YouTube</span>
+                            </a>
+                            <a class="project-tool" href="https://github.com/greinermachine/Classical_ML_CPP">
+                                <img class="project-icons" src="ImageBin/GH.png" alt="" aria-hidden="true">
+                                <span>GitHub</span>
+                            </a>
+                        </span>
                         </h2>
                         
 
@@ -92,9 +113,20 @@
                     <div class="hover-container">
                         <h2 class="project-title">04. PvZRL
                             <!-- https://x.com/czfortythree FOR THE ASSETS -->
-                            <a href="https://www.youtube.com/watch?v=pDFMzk09Gow&t=242s"><img class="project-icons"src="ImageBin/YT.png" alt="Youtube Logo"></a>
-                            <a href="https://github.com/greinermachine/PVZRL"><img class="project-icons"src="ImageBin/GH.png" alt="Github Logo"></a>
-                            <img class="project-icons" src="ImageBin/PVZ.png" alt="PVZLogo">
+                            <span class="project-tools" aria-label="PvZRL links and project icon">
+                                <a class="project-tool" href="https://www.youtube.com/watch?v=pDFMzk09Gow&t=242s">
+                                    <img class="project-icons" src="ImageBin/YT.png" alt="" aria-hidden="true">
+                                    <span>YouTube</span>
+                                </a>
+                                <a class="project-tool" href="https://github.com/greinermachine/PVZRL">
+                                    <img class="project-icons" src="ImageBin/GH.png" alt="" aria-hidden="true">
+                                    <span>GitHub</span>
+                                </a>
+                                <span class="project-tool project-tool-static" title="Plants vs. Zombies">
+                                    <img class="project-icons" src="ImageBin/PVZ.png" alt="" aria-hidden="true">
+                                    <span>PvZ</span>
+                                </span>
+                            </span>
                         </h2>
                         <img class="hover-image" src="ImageBin/PVZRL.gif" alt="PvZRL" aria-hidden="true">
                     </div>
@@ -125,10 +157,15 @@
         </p>
 
         <hr>
-
-            <a class="home-link" href="index.html">
-                <img src="ImageBin/BlurMetalLe.gif" alt="Home">
-            </a>
+            <p class="project-home project-home-bottom" data-pointer-side="bottom">
+                <a class="home-link" href="index.html">
+                    <img src="ImageBin/BlurMetalLe.gif" alt="Home">
+                </a>
+                <span class="pointer-hand-placeholder" aria-hidden="true"></span>
+                <button class="pointer-hand" type="button" aria-label="Point to the home link">
+                    <img src="ImageBin/handL-small.gif" alt="" aria-hidden="true">
+                </button>
+            </p>
     </main>
 </body>
 </html>

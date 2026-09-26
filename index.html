@@ -15,41 +15,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Nick Greiner's personal home page. Computer science, machine learning, C++, software, and other things that seemed like a good idea at the time.">
     <title>Nicholas Greiner — Official Home Page</title>
-    <link rel="icon" href="ImageBin/world.gif" type="image/gif">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <link rel="icon" href="ImageBin/shared/world.gif" type="image/gif">
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="script/script.js" defer></script>
 </head>
 <body>
     <header>
         <h1 class="name-heading">
             <button class="name-switch" id="name-switch" type="button" aria-label="Change the typeface of Nicholas Greiner">
                 <span id="name-text">NICHOLAS GREINER</span>
-                <img id="name-image" src="ImageBin/NicholasGreiner_T1.png" alt="Nicholas Greiner" hidden>
+                <img id="name-image" src="ImageBin/home/NicholasGreiner_T1.png" alt="Nicholas Greiner" hidden>
+                <span class="name-click-cue" aria-hidden="true">
+                    <img class="name-click-arrow" src="ImageBin/shared/handL-small.gif" alt="" width="33" height="14">
+                    <img class="name-click-me" src="ImageBin/shared/CM3.gif" alt="" width="88" height="31">
+                </span>
             </button>
         </h1>
         <p><strong>Official Home Page</strong></p>
-        <p>Computer Science — University of Florida <img class="school-gator" src="ImageBin/Gator.png" alt="Florida Gator"></p>
+        <p>Computer Science — University of Florida <img class="school-gator" src="ImageBin/home/Gator.png" alt="Florida Gator"></p>
     </header>
 
     <hr>
 
     <main>
-        <p>Welcome to my website. <img class="nav-icon" src="ImageBin/welcome.gif" alt="" aria-hidden="true"></p>
+        <p>Welcome to my website. <img class="nav-icon" src="ImageBin/home/welcome.gif" alt="" aria-hidden="true"></p>
         <p>I'm Nick. I work on machine learning, C++, software,<br>
             and other things that seemed like a good idea at the time.</p>
-        <img class="GD" src="ImageBin/GOINGDIGITAL.gif" alt="Going Digital">
+        <img class="GD" src="ImageBin/home/GOINGDIGITAL.gif" alt="Going Digital">
         <nav aria-labelledby="navigation-heading">
             <h2 id="navigation-heading">Navigation</h2>
             <ul class="directory">
-                <li><a href="projects.html">All Projects</a><img class="nav-icon" src="ImageBin/Projects.gif" alt="" aria-hidden="true"></li>
-                <li><a href="research.html">Research</a><img class="nav-icon" src="ImageBin/Research.gif" alt="" aria-hidden="true"></li>
+                <li><a href="projects.html">All Projects</a><img class="nav-icon" src="ImageBin/navigation/Projects.gif" alt="" aria-hidden="true"></li>
+                <li><a href="research.html">Research</a><img class="nav-icon" src="ImageBin/navigation/Research.gif" alt="" aria-hidden="true"></li>
                 <!-- <li><a href="#">Games</a></li> -->
-                <li><a href="#">Animals</a><img class="nav-icon" src="ImageBin/animals.gif" alt="" aria-hidden="true"></li>
+                <li><a href="animals.html">Animals</a><img class="nav-icon" src="ImageBin/navigation/animals.gif" alt="" aria-hidden="true"></li>
                 <!-- <li><a href="#">Fosters</a></li> -->
-                <li><a href="#">About Me</a><img class="nav-icon" src="ImageBin/aboutme.gif" alt="" aria-hidden="true"></li>
-                <li><a href="Greiner_Nicholas_Resume.pdf">Resume</a><img class="nav-icon" src="ImageBin/resume.gif" alt="" aria-hidden="true"></li>
+                <li><a href="#">About Me</a><img class="nav-icon" src="ImageBin/navigation/aboutme.gif" alt="" aria-hidden="true"></li>
+                <li><a href="Greiner_Nicholas_Resume.pdf">Resume</a><img class="nav-icon" src="ImageBin/navigation/resume.gif" alt="" aria-hidden="true"></li>
                 <!-- <li><a href="#">Cool Links</a></li> -->
-                <li><a href="https://github.com/greinermachine">GitHub</a><img class="nav-icon" src="ImageBin/github.gif" alt="" aria-hidden="true"></li>
+                <li><a href="https://github.com/greinermachine">GitHub</a><img class="nav-icon" src="ImageBin/navigation/github.gif" alt="" aria-hidden="true"></li>
                 <!-- <li><a href="#">Miscellaneous</a></li> -->
             </ul>
         </nav>
@@ -71,22 +75,22 @@
             <ul>
                 <li>
                     <a class="hover-container" href="projects.html">Gator++
-                        <img class="hover-image" src="ImageBin/GatorPP.PNG" alt="" aria-hidden="true">
+                        <img class="hover-image" src="ImageBin/projects/GatorPP.PNG" alt="" aria-hidden="true">
                     </a>
                 </li>
                 <li>
                     <a class="hover-container" href="projects.html">NumberSense
-                        <img class="hover-image" src="ImageBin/NumberSense.png" alt="" aria-hidden="true">
+                        <img class="hover-image" src="ImageBin/projects/NumberSense.png" alt="" aria-hidden="true">
                     </a>
                 </li>
                 <li>
                     <a class="hover-container" href="projects.html">Machine Learning in C++
-                        <img class="hover-image" src="ImageBin/ClassicML.png" alt="" aria-hidden="true">
+                        <img class="hover-image" src="ImageBin/projects/ClassicML.png" alt="" aria-hidden="true">
                     </a>
                 </li>
                 <li>
                     <a class="hover-container" href="projects.html">PvZRL
-                        <img class="hover-image" src="ImageBin/PVZRL.gif" alt="" aria-hidden="true">
+                        <img class="hover-image" src="ImageBin/projects/PVZRL.gif" alt="" aria-hidden="true">
                     </a>
                 </li>
             </ul>
@@ -100,12 +104,13 @@
         </aside>
     </main>
 
-    <img class="footer-eyes" src="ImageBin/eyes.gif" alt="" aria-hidden="true">
+    <img class="footer-eyes" src="ImageBin/home/eyes.gif" alt="" aria-hidden="true">
 
     <footer>
         <p>This page is handcrafted, I think?.</p>
         <p>Built using advanced technologies including HTML CSS, and JAVASCRIPT.</p>
-        <img class="BVWC" src="ImageBin/BVWC.gif" alt="Best Viewed Wih Computer">
+        <img class="BVWC" src="ImageBin/home/BVWC.gif" alt="Best Viewed Wih Computer">
+        <img class="PBimagination" src="ImageBin/home/pbimagination.gif" alt="This site is powered by imagination">
     </footer>
 </body>
 </html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PETMATCH 2000. Meet the animals I live with and have fostered.">
+    <title>Animals — Nicholas Greiner</title>
+    <link rel="icon" href="ImageBin/shared/world.gif" type="image/gif">
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="script/animals.js" defer></script>
+</head>
+<body class="animals-page">
+    <header>
+        <h1 class="animals-heading">ANIMALS
+            <button class="animal-paw" id="animal-paw" type="button"
+                title="Click here to let the cat loose" aria-label="Click here to let the cat loose" disabled>
+                <span class="animal-asset">
+                    <img src="ImageBin/animals/ui/paw-still.png" data-animation-src="ImageBin/animals/ui/paw.gif" alt="" width="20" height="20">
+                    <span data-asset-fallback hidden>[paw]</span>
+                </span>
+                <img class="animal-paw-hand" src="ImageBin/shared/handL-small.gif" alt="" aria-hidden="true" width="33" height="14">
+                <img class="animal-paw-click" src="ImageBin/shared/CM2.gif" alt="" aria-hidden="true" width="88" height="31">
+            </button>
+        </h1>
+    </header>
+
+    <hr>
+
+    <main>
+        <p class="project-home project-home-top">
+            <a class="home-link" href="index.html">
+                <img src="ImageBin/shared/BlurMetalLe.gif" alt="Home">
+            </a>
+        </p>
+
+        <p>A collection of creatures I live with,<br>
+            have fostered, or otherwise answer to.</p>
+
+        <div class="animal-shelf-scene" aria-hidden="true">
+            <div class="animal-shelf"></div>
+            <div class="animal-sign" id="animal-sign">PLEASE DO NOT<br>KNOCK THIS OVER</div>
+        </div>
+
+        <section class="petmatch" aria-labelledby="petmatch-heading">
+            <h2 id="petmatch-heading">PETMATCH 2000</h2>
+            <p class="petmatch-subtitle">Animal Compatibility Database</p>
+            <p>The Internet's Premier Animal Matching Service*<br>
+                <small>*not actually a service</small></p>
+
+            <p id="animals-unavailable">The profile controls and paw need JavaScript.
+                Enable JavaScript to browse the animal photographs.</p>
+
+            <div id="animal-viewer">
+                <hr>
+                <p>
+                    <label for="animal-filter">View:</label>
+                    <select id="animal-filter">
+                        <option value="all">All Animals</option>
+                        <option value="current">Current Residents</option>
+                        <option value="foster">Fosters</option>
+                    </select>
+                </p>
+                <p class="animal-record-number" id="animal-record-number" role="status" aria-atomic="true"></p>
+
+                <div id="animal-profile">
+                    <figure class="animal-portrait">
+                        <div class="animal-photo-frame" id="animal-photo-frame">
+                            <img id="animal-photo" alt="" hidden>
+                            <p id="animal-photo-missing">Photograph not added yet.</p>
+                        </div>
+                        <figcaption id="animal-photo-caption"></figcaption>
+                    </figure>
+
+                    <div class="animal-controls animal-photo-navigation" role="group" aria-label="Photos of this animal">
+                        <button class="project-tool" id="animal-photo-previous" type="button" aria-label="Previous photo">
+                            <img src="ImageBin/animals/ui/animal_photo_prev.gif" alt="" width="20" height="20">
+                        </button>
+                        <span id="animal-photo-number" role="status" aria-atomic="true">photo 0 / 0</span>
+                        <button class="project-tool" id="animal-photo-next" type="button" aria-label="Next photo">
+                            <img src="ImageBin/animals/ui/animal_photo_next.gif" alt="" width="20" height="20">
+                        </button>
+                    </div>
+
+                    <dl class="animal-stats" id="animal-stats"></dl>
+                </div>
+
+                <p id="animal-empty" hidden>No animals filed under this heading yet.</p>
+                <div class="animal-controls animal-navigation" role="group" aria-label="Animals">
+                    <button class="project-tool" id="animal-previous" type="button">← PREVIOUS ANIMAL</button>
+                    <button class="project-tool" id="animal-next" type="button">NEXT ANIMAL →</button>
+                </div>
+            </div>
+        </section>
+
+        <p class="animal-cat-lover">
+            <img src="ImageBin/animals/ui/Cat_Lover.png" alt="I love cats" width="99" height="56">
+        </p>
+
+        <hr>
+
+        <p class="project-home">
+            <a class="home-link" href="index.html">
+                <img src="ImageBin/shared/BlurMetalLe.gif" alt="Home">
+            </a>
+        </p>
+    </main>
+
+    <footer class="animal-reset-space">
+        <button class="project-tool" id="animal-reset" type="button" hidden>[put it back]</button>
+    </footer>
+
+    <div class="animal-fall-layer" id="animal-fall-layer" aria-hidden="true" hidden>
+        <div class="animal-cat animal-asset" id="animal-cat" hidden>
+            <img src="ImageBin/animals/ui/cat_run.gif" alt="" width="500" height="50" hidden>
+            <span data-asset-fallback>[cat]</span>
+        </div>
+    </div>
+    <p class="animal-gag-status" id="animal-gag-status" role="status" aria-atomic="true"></p>
+</body>
+</html>

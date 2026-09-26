@@ -31,7 +31,11 @@ h1 {
 }
 
 .name-switch {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
     max-width: 100%;
     padding: 0;
     border: 0;
@@ -46,7 +50,7 @@ h1 {
     line-height: 1.2;
 }
 
-.name-switch img {
+.name-switch #name-image {
     display: block;
     width: auto;
     height: 3rem;
@@ -54,8 +58,29 @@ h1 {
     object-fit: contain;
 }
 
-.name-switch img[hidden] {
+.name-switch #name-image[hidden],
+.name-switch #name-text[hidden] {
     display: none;
+}
+
+.name-click-cue {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    flex: 0 0 auto;
+}
+
+.name-click-arrow {
+    display: block;
+    width: 33px;
+    height: 14px;
+}
+
+.name-click-me {
+    display: block;
+    width: 88px;
+    height: 31px;
 }
 
 .name-switch:focus-visible {
@@ -83,6 +108,14 @@ header p {
     display: inline-block;
     width: 6.9rem;
     height: auto;
+    vertical-align: -0.35rem;
+    mix-blend-mode: multiply;
+}
+.PBimagination {
+    display: inline-block;
+    width: 6.9rem;
+    height: auto;
+    margin-left: 0.35rem;
     vertical-align: -0.35rem;
     mix-blend-mode: multiply;
 }
@@ -372,7 +405,7 @@ footer p {
 
 
 @media (max-width: 30rem) {
-    .name-switch img {
+    .name-switch #name-image {
         height: 2.75rem;
     }
 
@@ -610,7 +643,7 @@ footer p {
     outline-offset: 4px;
 }
 
-/* Research image viewer: native dialog semantics and Escape, with a small keyboard loop in research.js. */
+/* Research image viewer: native dialog semantics and Escape, with a small keyboard loop in script/research.js. */
 .research-viewer {
     box-sizing: border-box;
     width: fit-content;
@@ -690,6 +723,314 @@ footer p {
     }
 
     .research-page .home-link::after {
+        content: "[home]";
+    }
+}
+
+/* ANIMALS PAGE */
+.animals-page [hidden] {
+    display: none;
+}
+
+.petmatch {
+    text-align: center;
+}
+
+.animals-page .project-tool {
+    min-height: 1.75rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.animals-page .project-tool:disabled,
+.animals-page .project-tool[aria-disabled="true"] {
+    color: #555;
+    cursor: default;
+}
+
+.animals-page button:focus-visible,
+.animals-page select:focus-visible {
+    outline: 2px dotted #111;
+    outline-offset: 4px;
+}
+
+.animals-page .animal-asset img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 5rem;
+    margin: auto;
+    object-fit: contain;
+}
+
+.animals-page .animal-asset img[hidden] {
+    display: none;
+}
+
+.animal-portrait figcaption {
+    font-size: 0.875rem;
+}
+
+.petmatch h2 {
+    margin-bottom: 0;
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+}
+
+.petmatch-subtitle {
+    margin-top: 0;
+}
+
+.animal-record-number {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.8125rem;
+}
+
+.animal-portrait {
+    width: min(20rem, 100%);
+    margin: 1rem auto 0.5rem;
+}
+
+.animal-photo-frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    padding: 0.5rem;
+    border: 7px ridge #aaa;
+    background: #e8e6de;
+}
+
+.animal-photo-frame.frame-wood {
+    border: 9px ridge #85603d;
+}
+
+.animal-photo-frame.frame-polaroid {
+    border: 1px solid #999;
+    padding: 0.5rem 0.5rem 1.5rem;
+    background: #fffefa;
+}
+
+.animal-photo-frame.frame-gold {
+    border: 8px ridge #ad8a35;
+}
+
+.animal-photo-frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: contain;
+}
+
+.animal-photo-frame p {
+    margin: 0;
+    padding: 1rem;
+    font-size: 0.875rem;
+}
+
+.animal-portrait figcaption {
+    margin-top: 0.4rem;
+    overflow-wrap: anywhere;
+}
+
+.animal-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.animal-controls .project-tool {
+    min-width: 2rem;
+}
+
+.animal-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem 1.5rem;
+    max-width: 38rem;
+    margin: 1.5rem auto;
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+.animal-stat {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    align-items: baseline;
+    gap: 0.45rem;
+}
+
+.animal-stats dt {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.animal-stats dd {
+    margin: 0;
+}
+
+.animal-navigation {
+    margin-top: 1.25rem;
+}
+
+.animal-photo-navigation .project-tool img {
+    width: 20px;
+    height: 20px;
+}
+
+.animals-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+}
+
+.animal-paw {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    width: auto;
+    min-height: 2.75rem;
+    height: auto;
+    padding: 0.2rem;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: 1.5rem/1 "Segoe UI Symbol", sans-serif;
+    cursor: pointer;
+}
+
+.animal-paw:disabled,
+.animal-paw[aria-disabled="true"] {
+    cursor: default;
+}
+
+.animals-page .animal-paw .animal-asset img {
+    width: 20px;
+    height: 20px;
+}
+
+.animals-page .animal-paw .animal-paw-hand {
+    width: 33px;
+    height: 14px;
+}
+
+.animals-page .animal-paw .animal-paw-click {
+    width: 88px;
+    height: 31px;
+}
+
+.animal-shelf-scene {
+    position: relative;
+    height: 5rem;
+    margin: 0.75rem 0 1.5rem;
+}
+
+.animal-shelf {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 11rem;
+    height: 0.45rem;
+    border: 2px outset #967b61;
+    background: #796047;
+}
+
+.animal-sign {
+    position: absolute;
+    right: 1rem;
+    bottom: 0.6rem;
+    box-sizing: border-box;
+    width: 8.5rem;
+    padding: 0.5rem 0.2rem;
+    border: 4px ridge #8c7455;
+    background: #fffde7;
+    text-align: center;
+    font: bold 0.65rem/1.4 Arial, sans-serif;
+    transform-origin: center;
+}
+
+.animal-fall-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    z-index: 20;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.animal-sign-loose {
+    right: auto;
+    bottom: auto;
+    z-index: 1;
+}
+
+.animal-cat {
+    position: absolute;
+    left: 0;
+    width: 500px;
+    height: 50px;
+    font-size: 0.75rem;
+    pointer-events: none;
+}
+
+.animals-page .animal-cat img {
+    width: 100%;
+    max-height: none;
+}
+
+.animal-gag-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.animal-reset-space {
+    min-height: 2rem;
+    text-align: left;
+}
+
+.animal-cat-lover {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+@media (max-width: 30rem) {
+    .animals-heading {
+        flex-wrap: wrap;
+    }
+
+    .animal-stat {
+        grid-template-columns: 1fr;
+        gap: 0.1rem;
+    }
+
+    .animal-stats {
+        gap: 0.75rem 1rem;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animals-page .animal-cat,
+    .animals-page .home-link img {
+        display: none;
+    }
+
+    .animals-page .home-link::after {
         content: "[home]";
     }
 }

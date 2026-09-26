@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Nicholas Greiner's research on near-terminal warning in vision-language-action models and attribution-based out-of-distribution detection.">
     <title>Research — Nicholas Greiner</title>
-    <link rel="icon" href="ImageBin/world.gif" type="image/gif">
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
-    <script src="research.js" defer></script>
+    <link rel="icon" href="ImageBin/shared/world.gif" type="image/gif">
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="script/script.js" defer></script>
+    <script src="script/research.js" defer></script>
 </head>
 <body class="research-page">
     <header>
@@ -20,7 +20,7 @@
     <main>
         <p class="project-home project-home-top">
             <a class="home-link" href="index.html">
-                <img src="ImageBin/BlurMetalLe.gif" alt="Home">
+                <img src="ImageBin/shared/BlurMetalLe.gif" alt="Home">
             </a>
         </p>
 
@@ -44,7 +44,7 @@
                 <p>Vision-language-action models can continue producing plausible robot actions even as a rollout moves toward failure. This work studies whether internal OpenVLA activations contain signals that indicate an approaching task failure before the episode terminates.</p>
                 <p>The current experiments use OpenVLA rollouts in LIBERO-Spatial. The immediate goal is to determine whether a lightweight probe trained on internal activations can predict near-terminal failure and whether that signal generalizes beyond the rollout initializations used during training.</p>
                 <figure class="research-infographic">
-                    <img src="ImageBin/VLAResearch.png" alt="Experiment overview: OpenVLA rollouts, activation signals, near-terminal labels, probe training, and held-out initialization testing">
+                    <img src="ImageBin/research/vla/VLAResearch.png" alt="Experiment overview: OpenVLA rollouts, activation signals, near-terminal labels, probe training, and held-out initialization testing">
                     <figcaption>Experiment overview.</figcaption>
                 </figure>
             </section>
@@ -64,7 +64,7 @@
                     <dd>Clean observations and controlled visual-shift observations</dd>
                 </dl>
                 <figure class="research-infographic research-environment-graphic">
-                    <img src="ImageBin/VLAResearchENV.gif" alt="Animated LIBERO rollout environment with episode state and target information">
+                    <img src="ImageBin/research/vla/VLAResearchENV.gif" alt="Animated LIBERO rollout environment with episode state and target information">
                     <figcaption>LIBERO rollout environment example.</figcaption>
                 </figure>
             </section>
@@ -91,7 +91,7 @@
                 <p>For a failed rollout, timesteps immediately preceding failure receive positive labels. Timesteps farther from failure provide negative examples, while an intermediate buffer region is excluded to create a clearer separation between warning and non-warning states.</p>
                 <p>Successful episodes contribute negative examples because no task failure occurs during the rollout.</p>
                 <figure class="research-infographic research-terminal-graphic">
-                    <img src="ImageBin/NTWTI.png" alt="Near-terminal warning label rules for predicting whether a rollout will fail within the next 15 steps">
+                    <img src="ImageBin/research/vla/NTWTI.png" alt="Near-terminal warning label rules for predicting whether a rollout will fail within the next 15 steps">
                     <figcaption>Near-terminal warning label rules.</figcaption>
                 </figure>
             </section>
@@ -302,7 +302,7 @@ ID / OOD</pre>
 
         <p class="project-home">
             <a class="home-link" href="index.html">
-                <img src="ImageBin/BlurMetalLe.gif" alt="Home">
+                <img src="ImageBin/shared/BlurMetalLe.gif" alt="Home">
             </a>
         </p>
     </main>

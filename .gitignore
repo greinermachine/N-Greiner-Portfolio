@@ -1,6 +1,7 @@
 # Local agent/workspace metadata
 .agents/
 .codex/
+
 # OS/editor noise
 .DS_Store
 Thumbs.db

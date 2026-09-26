@@ -1,10 +1,10 @@
 // FOR HOME PAGE 
 const nameDesigns = [
-    "ImageBin/NicholasGreiner_T1.png",
-    "ImageBin/NicholasGreiner_T2.gif",
-    "ImageBin/NicholasGreiner_T3.png",
-    "ImageBin/NicholasGreiner_T4.png",
-    "ImageBin/NicholasGreiner_T5.png"
+    "ImageBin/home/NicholasGreiner_T1.png",
+    "ImageBin/home/NicholasGreiner_T2.gif",
+    "ImageBin/home/NicholasGreiner_T3.png",
+    "ImageBin/home/NicholasGreiner_T4.png",
+    "ImageBin/home/NicholasGreiner_T5.png"
 ];
 
 const nameSwitch = document.querySelector("#name-switch");

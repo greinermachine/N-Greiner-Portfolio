@@ -63,9 +63,9 @@
                     <dt>Conditions</dt>
                     <dd>Clean observations and controlled visual-shift observations</dd>
                 </dl>
-                <figure class="research-infographic research-environment-graphic">
-                    <img src="ImageBin/research/vla/VLAResearchENV.gif" alt="Animated LIBERO rollout environment with episode state and target information">
-                    <figcaption>LIBERO rollout environment example.</figcaption>
+                <figure class="research-infographic">
+                    <img src="ImageBin/research/vla/VLAEventWarning.gif" alt="Full LIBERO visual-shift rollout with a drop-event statistics panel showing the current frame, proposed onset at step 78, confirmation at step 80, target object, and changing target distance" width="616" height="320">
+                    <figcaption>Full V3.1 rollout with event and rollout statistics. The panel tracks the earliest raw event candidate using retrospective annotations for studying failure-warning signals.</figcaption>
                 </figure>
             </section>
 
@@ -170,7 +170,21 @@
                     for detecting out-of-distribution data?</p>
                 <p>A vision classifier can give a confident answer to an image that belongs to none of its training classes. Confidence alone does not necessarily tell us that the input is unfamiliar.</p>
                 <p>This project investigates whether the pattern of pixels contributing to a prediction provides an additional signal. Attribution maps from familiar and unfamiliar inputs become the input to a second classifier, which learns to distinguish in-distribution (ID) from out-of-distribution (OOD) examples.</p>
+                <p>The practical question is whether a classifier's explanation helps reveal when its confidence is misplaced. I built the image-classification, attribution-generation, and detector-training pipelines, then compared learning directly from the maps with learning from compact numerical descriptions of them.</p>
             </section>
+
+            <details class="research-disclosure">
+                <summary>
+                    <strong>How the project developed</strong>
+                    <span>From a CIFAR-100 prototype to ImageNet experiments and feature-based detectors.</span>
+                </summary>
+                <ol class="research-phases">
+                    <li><strong>Initial prototype.</strong> Modify CIFAR-100 to hold out classes, fine-tune a ResNet-50 on the remaining classes, and implement Integrated Gradients with Captum. This established the classifier and explanation pipeline before training the OOD detector.</li>
+                    <li><strong>Iteration with Karla Tran.</strong> Move to ImageNet with 10 dog classes as ID, 10 visually similar animal classes as near-OOD, and 10 dissimilar non-animal classes as far-OOD. Develop the pipeline for saving attribution maps and prediction metadata, with separate near, far, and combined detector experiments.</li>
+                    <li><strong>Iteration with Caio Miyake.</strong> Compare attribution methods and class selections, evaluate one combined detector on multiple OOD groups, and expand from map-based ResNets to MLPs using attribution statistics, classifier uncertainty, and perturbation-based features.</li>
+                </ol>
+                <p class="research-note">The original proposal also explored using a vision-language model to describe unusual evidence and an LLM to assess it against a system specification. The implemented experiments described here focus on attribution-based ID / OOD detection; they do not establish automated perception-contract verification.</p>
+            </details>
 
             <details class="research-disclosure">
                 <summary>
@@ -219,6 +233,8 @@
                     <dd>Integrated Gradients and Guided Backpropagation, with generated maps for ID, near-OOD, and far-OOD images. The pipeline produced tens of thousands of attribution maps from ImageNet-1K class subsets.</dd>
                     <dt>Feature-based detection</dt>
                     <dd>Multilayer perceptrons (MLPs) trained on numerical feature vectors extracted from attribution maps, with successive experiments expanding what each vector describes.</dd>
+                    <dt>Nearest-neighbor baselines</dt>
+                    <dd>Additional experiments on saved attribution maps compare a supervised k-nearest-neighbor classifier with an ID-only distance detector. The ID-only version measures distance to familiar maps and selects its threshold from ID validation examples.</dd>
                 </dl>
             </details>
 
@@ -257,6 +273,8 @@ ID / OOD</pre>
                     <span>Training MLPs on progressively expanded attribution feature sets.</span>
                 </summary>
                 <p>Alongside learning directly from the maps, I trained MLP detectors on progressively expanded feature sets. Each version tested a different way of representing the attribution pattern and the original classifier's response.</p>
+                <p>Big thanks to <a href="https://willenglish.tech/">Will English</a> for suggesting this part and even doing a writeup for it.</p>
+                <p><a href="research/NickWriteup.pdf">[read Will's writeup — PDF]</a></p>
                 <dl class="research-tasks">
                     <dt>24 features — attribution statistics</dt>
                     <dd>Per-channel statistics such as minimum, maximum, mean, standard deviation, and fraction of positive attributions, plus global summaries including norms, spatial entropy, and concentration in the most strongly attributed pixels.</dd>
@@ -268,8 +286,29 @@ ID / OOD</pre>
                     <dd>Add GARI, GARD, and their combined GAROD score: features examining the model's response to changes in background pixels and pixels identified as important.</dd>
                     <dt>583 features — descriptions across classes</dt>
                     <dd>Repeat the 58-feature extraction for all 10 classifier classes, then append the three GAROD-based features.</dd>
+                    <dt>Additional implemented feature variants</dt>
+                    <dd>A 65-feature extractor compares attribution maps for the two highest-scoring classes using similarity, distance, overlap, and energy ratios. A separate 70-feature extractor adds localization and compactness measurements to the 58-feature representation, including attribution center of mass and the extent of the strongest pixels.</dd>
                 </dl>
                 <p>The MLP experiments used batch normalization, GELU activations, dropout, AdamW, learning-rate scheduling, and early stopping. The map-based detector also used class-balanced sampling and normalization based on ID attribution statistics.</p>
+            </details>
+
+            <details class="research-disclosure">
+                <summary>
+                    <strong>Results and what they show</strong>
+                    <span>Attribution features carry an OOD signal, with near-OOD remaining the harder setting.</span>
+                </summary>
+                <p>The saved 583-feature experiment trained separate MLPs for near-OOD, far-OOD, and both groups, using a 70% / 20% / 10% train, validation, and test split. Their recorded test results were:</p>
+                <dl class="research-tasks">
+                    <dt>ID vs. near-OOD</dt>
+                    <dd>82.74% accuracy; AUROC 0.9091; AUPRC 0.9089.</dd>
+                    <dt>ID vs. far-OOD</dt>
+                    <dd>90.29% accuracy; AUROC 0.9652; AUPRC 0.9623.</dd>
+                    <dt>ID vs. both OOD groups</dt>
+                    <dd>84.18% accuracy; AUROC 0.9230; AUPRC 0.9582.</dd>
+                </dl>
+                <p>In the later nearest-neighbor experiment, the ID-only distance baseline recorded AUROC 0.6643 on near-OOD and 0.8631 on far-OOD. That experiment used resized attribution-energy maps and cosine distance, so it is a separate representation and setup rather than a controlled comparison with the MLP.</p>
+                <p>The recurring finding is that visually similar unseen classes are harder to separate from familiar classes. The results support attribution patterns as a useful detection signal in these experiments; they do not show that a confident prediction is safe or that every unseen class can be detected.</p>
+                <p class="research-note">These are exploratory results on selected ImageNet subsets from individual saved runs. The 583-feature notebook computes feature normalization from the full ID pool, including its held-out portion. The scores therefore are not a fully independent preprocessing evaluation. The combined test set also contains two OOD groups for one ID group, so its accuracy and AUPRC should be read with that different class balance in mind. Evaluation on classes unseen by the detector is a separate experiment.</p>
             </details>
 
             <!-- <section class="research-presentation" aria-labelledby="xai-presentation">

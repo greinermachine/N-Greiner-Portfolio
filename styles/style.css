@@ -263,6 +263,13 @@ a:focus-visible {
     margin-top: 0.5rem;
 }
 
+.maplet-updated {
+    width: 53px;
+    height: 15px;
+    margin-left: 0.3rem;
+    vertical-align: middle;
+}
+
 .project-home {
     display: flex;
     align-items: center;
@@ -1031,6 +1038,416 @@ footer p {
     }
 
     .animals-page .home-link::after {
+        content: "[home]";
+    }
+}
+
+/* ABOUT PAGE: a wallet, a few photographs, and a small pool table. */
+.about-page [hidden] {
+    display: none;
+}
+
+.about-page button:focus-visible,
+.about-page summary:focus-visible,
+.about-page input:focus-visible,
+.about-page canvas:focus-visible {
+    outline: 2px dotted #111;
+    outline-offset: 4px;
+}
+
+.about-wallet {
+    margin: 2rem auto;
+    text-align: center;
+}
+
+.about-wallet summary {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    color: #0000ee;
+    cursor: pointer;
+    list-style: none;
+}
+
+.about-wallet summary::-webkit-details-marker {
+    display: none;
+}
+
+.wallet-label {
+    text-decoration: underline;
+}
+
+.wallet-label-open,
+.about-wallet[open] .wallet-label-closed {
+    display: none;
+}
+
+.about-wallet[open] .wallet-label-open {
+    display: inline;
+}
+
+.about-wallet summary small {
+    color: #444;
+}
+
+.wallet-picture {
+    position: relative;
+    box-sizing: border-box;
+    width: 6rem;
+    height: 3.75rem;
+    border: 4px ridge #6e4732;
+    background: #70503c;
+}
+
+.wallet-picture::before {
+    content: "";
+    position: absolute;
+    inset: 0.3rem;
+    border: 1px dashed #bd9876;
+}
+
+.wallet-picture span {
+    position: absolute;
+    top: 0.7rem;
+    right: -0.25rem;
+    width: 1.25rem;
+    height: 0.75rem;
+    border: 2px outset #8f6b4c;
+    background: #79543c;
+}
+
+.wallet-contents {
+    margin: 0.75rem auto 0;
+}
+
+.wallet-strip {
+    width: min(12rem, 100%);
+    margin: auto;
+    padding: 0.3rem;
+    border: 2px solid #888;
+    background: #ddd9ce;
+}
+
+.wallet-strip figure {
+    margin: 0;
+    padding: 0.4rem;
+    border: 1px solid #aaa;
+    background: #fffdf5;
+}
+
+.wallet-strip figure:nth-child(even) {
+    background: #ece9de;
+}
+
+/* IMG_0722 is stored sideways without orientation metadata; keep the original file. */
+.wallet-photo-rotated {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2208 / 1242;
+    overflow: hidden;
+}
+
+.about-page .wallet-photo-rotated img {
+    position: absolute;
+    width: 56.25%;
+    height: 177.78%;
+    max-width: none;
+    left: 21.875%;
+    top: -38.89%;
+    transform: rotate(-90deg);
+}
+
+.wallet-strip figcaption,
+.about-page figcaption {
+    margin-top: 0.35rem;
+    font-size: 0.875rem;
+}
+
+.about-photo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: 6.5rem;
+    padding: 0.75rem;
+    border: 1px solid #aaa;
+    background: #e7e5dc;
+    color: #4a4944;
+    text-align: center;
+    font-size: 0.875rem;
+}
+
+.about-note {
+    color: #555;
+    font-size: 0.875rem;
+}
+
+.about-featured-photo {
+    width: min(21rem, 100%);
+    margin: 1.25rem auto;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    border: 6px ridge #a8895f;
+    background: #fffdf5;
+    text-align: center;
+}
+
+.about-featured-photo .about-photo-placeholder {
+    min-height: 11rem;
+}
+
+.about-friend-photos {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.about-friend-photos figure {
+    min-width: 0;
+    margin: 0;
+    padding: 0.3rem;
+    border: 1px solid #aaa;
+    background: #fffdf5;
+    text-align: center;
+}
+
+.about-page figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* The group screenshots include phone UI; focus the frame on the photo. */
+.about-friend-photos .about-photo-screenshot {
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    object-position: center;
+}
+
+.about-friend-photos .about-photo-screenshot-portrait {
+    aspect-ratio: 3 / 4;
+}
+
+.pool-game {
+    margin: 1.5rem 0;
+    padding: 0.75rem;
+    border: 2px ridge #b4b4ab;
+    background: #f4f3eb;
+    text-align: center;
+}
+
+.pool-game h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.pool-heading-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+}
+
+.pool-help {
+    position: relative;
+    margin: 0;
+}
+
+.pool-help summary {
+    width: 1.4rem;
+    min-height: 1.4rem;
+    padding: 0;
+    font-size: 0.8rem;
+    font-weight: bold;
+    list-style: none;
+    cursor: pointer;
+}
+
+.pool-help summary::-webkit-details-marker {
+    display: none;
+}
+
+.pool-help-text {
+    position: absolute;
+    z-index: 3;
+    top: calc(100% + 0.3rem);
+    right: 0;
+    box-sizing: border-box;
+    width: min(25rem, calc(100vw - 6rem));
+    padding: 0.5rem 0.75rem;
+    border: 2px outset #dfdfdf;
+    background: #f5f3e8;
+    color: #111;
+    text-align: left;
+    font-size: 0.875rem;
+    line-height: 1.35;
+}
+
+.pool-help-text p {
+    margin: 0.5rem 0;
+}
+
+.pool-tagline {
+    margin-top: 0.2rem;
+    font-size: 0.875rem;
+}
+
+.pool-badge,
+.pool-fish {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    vertical-align: middle;
+}
+
+.pool-badge {
+    width: 22px;
+    height: 21px;
+}
+
+.pool-fish {
+    width: 32px;
+    height: 32px;
+}
+
+.pool-table-wrap {
+    /* Let the aiming area use the panel's padding while keeping it in the page. */
+    margin-inline: -0.65rem;
+    line-height: 0;
+}
+
+.pool-table-wrap canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #245d40;
+    cursor: crosshair;
+    touch-action: none;
+}
+
+.pool-score {
+    font: 0.8125rem "Courier New", Courier, monospace;
+}
+
+.pool-status {
+    min-height: 1.45em;
+    font-size: 0.875rem;
+}
+
+.pool-controls {
+    margin: 0.75rem auto 0;
+    padding: 0.5rem;
+    border: 1px solid #aaa;
+    font-size: 0.875rem;
+}
+
+.pool-controls label {
+    display: inline-block;
+    margin: 0.25rem 0.2rem;
+}
+
+.pool-controls input {
+    width: 6rem;
+    max-width: 40%;
+    vertical-align: middle;
+}
+
+.pool-spin {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem 0.75rem;
+    margin: 0.65rem auto 0;
+}
+
+#pool-spin-pad {
+    position: relative;
+    flex: 0 0 auto;
+    width: 3.25rem;
+    height: 3.25rem;
+    padding: 0;
+    border: 2px solid #555;
+    border-radius: 50%;
+    background: #fffdf3;
+    cursor: crosshair;
+    touch-action: none;
+}
+
+#pool-spin-pad::before,
+#pool-spin-pad::after {
+    content: "";
+    position: absolute;
+    background: #c9c6b8;
+    pointer-events: none;
+}
+
+#pool-spin-pad::before {
+    left: 50%;
+    top: 12%;
+    width: 1px;
+    height: 76%;
+}
+
+#pool-spin-pad::after {
+    left: 12%;
+    top: 50%;
+    width: 76%;
+    height: 1px;
+}
+
+#pool-spin-dot {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    width: 0.4rem;
+    height: 0.4rem;
+    border: 1px solid #713020;
+    border-radius: 50%;
+    background: #bd4933;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.pool-spin-sliders {
+    display: grid;
+    grid-template-columns: max-content minmax(5rem, 7rem);
+    align-items: center;
+    text-align: right;
+}
+
+.pool-spin-sliders input {
+    width: 100%;
+    max-width: none;
+}
+
+.pool-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+}
+
+.pool-buttons .project-tool {
+    cursor: pointer;
+}
+
+.pool-buttons .project-tool:disabled {
+    color: #666;
+    cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .about-page .home-link img {
+        display: none;
+    }
+
+    .about-page .home-link::after {
         content: "[home]";
     }
 }

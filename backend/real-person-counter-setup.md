@@ -1,0 +1,11 @@
+# Real-person button
+
+The counter reads the current total when the About page opens, but **records a count only after someone clicks the guestbook sign**. Signing can include an optional public name of up to 24 characters; named signers see a thank-you popup, and their names appear in the hidden magic room. Anonymous signers still count. A randomly generated browser ID and a successful-click flag are stored in localStorage to discourage repeat clicks in that browser. The database keeps recent IDs briefly for retries, increments the total atomically, and exposes only the read and sign functions; the underlying tables remain private.
+
+## Enable after review
+
+1. Confirm the existing `greinermachine` Supabase project is active and intended for this site. Its previously configured URL and browser-safe publishable key are in `script/about-counter.js`.
+2. In its SQL editor, review and run `backend/real-person-counter.sql`. The script is additive and will not reset an existing total when rerun.
+3. Publish the site changes when ready. Open `about.html`: loading or refreshing must leave the total unchanged. Enter an optional name and click **Sign my guestbook**: the total should increase once and the popup should appear. Refreshing or clicking again in the same browser should not increase it. A different browser can sign independently. Follow the hidden ad/door path to check that public names appear on the magic-room wall.
+
+Before the SQL is installed, or if the service is unavailable, the page says `OFFLINE`; it never fabricates a number. Names entered in the optional field are public and remain stored until the site owner removes them. The wall renders them as text, and the database restricts length and control characters. This is a self-reported count, not proof that someone is human or a precise count of individual people. Different browsers/devices, cleared or blocked storage, automated clients, and deliberate requests can inflate it. The stored ID is random; the server removes old claim IDs after approximately 2–3 days when it receives another click. Network providers may separately process request metadata. Public names and the public endpoint can be abused; add moderation, server-side rate limiting, or bot protection if needed.

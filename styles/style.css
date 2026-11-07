@@ -122,6 +122,7 @@ header p {
 .GD {
     display: inline-block;
     width: 25rem;
+    max-width: 100%;
     height: auto;
     vertical-align: -0.35rem;
     mix-blend-mode: multiply;
@@ -367,6 +368,25 @@ a:focus-visible {
     font-family: "Courier New", Courier, monospace;
     font-size: 1rem;
     letter-spacing: 0.15em;
+}
+
+.contact-email-icon {
+    width: 89px;
+    height: 26px;
+    vertical-align: middle;
+}
+
+.guestbook-sign {
+    width: 88px;
+    height: 31px;
+    vertical-align: middle;
+}
+
+.counter-info-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
 }
 
 footer {
@@ -1043,6 +1063,12 @@ footer p {
 }
 
 /* ABOUT PAGE: a wallet, a few photographs, and a small pool table. */
+.about-greeting-icon {
+    width: 2rem;
+    height: 2rem;
+    vertical-align: middle;
+}
+
 .about-page [hidden] {
     display: none;
 }
@@ -1055,9 +1081,97 @@ footer p {
     outline-offset: 4px;
 }
 
+.wallet-and-counter {
+    position: relative;
+    margin: 2rem 0;
+}
+
 .about-wallet {
-    margin: 2rem auto;
+    margin: 0 auto;
     text-align: center;
+}
+
+.real-person-counter {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 9.25rem;
+    text-align: center;
+    font: 0.7rem/1.35 "Courier New", Courier, monospace;
+}
+
+.real-person-counter samp {
+    display: inline-block;
+    min-width: 5.5em;
+    margin: 0.2rem 0;
+    padding: 0.1rem 0.25rem;
+    border: 2px inset #888;
+    background: #222;
+    color: #faf9f3;
+    font: inherit;
+    text-align: center;
+}
+
+.real-person-counter .guestbook-button {
+    display: inline-block;
+    margin: 0.1rem 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.real-person-counter .guestbook-button:disabled {
+    cursor: default;
+}
+
+.real-person-counter small {
+    font-size: 0.9em;
+}
+
+.real-person-counter label {
+    display: inline-block;
+    margin-top: 0.25rem;
+}
+
+.real-person-counter input {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 8.5rem;
+    padding: 0.15rem;
+    font: 0.75rem Arial, sans-serif;
+}
+
+.guestbook-dialog {
+    max-width: min(24rem, calc(100% - 3rem));
+    padding: 1rem;
+    border: 2px outset #dfdfdf;
+    background: #faf9f3;
+    color: #111;
+    font: 1rem/1.45 "Times New Roman", Times, serif;
+}
+
+.guestbook-dialog::backdrop {
+    background: rgb(0 0 0 / 45%);
+}
+
+.guestbook-dialog form {
+    text-align: right;
+}
+
+@media (max-width: 32rem) {
+    .wallet-and-counter {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .real-person-counter {
+        position: static;
+        order: -1;
+        align-self: flex-end;
+    }
 }
 
 .about-wallet summary {
@@ -1449,5 +1563,231 @@ footer p {
 
     .about-page .home-link::after {
         content: "[home]";
+    }
+}
+
+/* A small fake ad and the two hidden rooms. */
+.secret-ad {
+    position: fixed;
+    z-index: 15;
+    top: 25%;
+    right: 0;
+    max-width: calc(100vw - 1rem);
+    line-height: 0;
+}
+
+.secret-ad [hidden],
+.secret-room [hidden],
+.magic-room [hidden],
+.magic-cursor[hidden] {
+    display: none;
+}
+
+.secret-ad-banner {
+    display: flex;
+    align-items: flex-start;
+    background: #fff;
+    border: 2px outset #c0c0c0;
+}
+
+.secret-ad-art {
+    display: block;
+    width: min(15rem, calc(100vw - 4rem));
+    height: auto;
+}
+
+.secret-ad-close,
+.secret-switch,
+.magic-ball {
+    display: inline-block;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    line-height: 0;
+}
+
+.secret-ad-close img,
+.secret-ad-door img {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+}
+
+.secret-ad-door {
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+}
+
+.secret-ad-close:focus-visible,
+.secret-ad-door:focus-visible,
+.secret-room a:focus-visible,
+.secret-room button:focus-visible,
+.magic-room a:focus-visible,
+.magic-room button:focus-visible {
+    outline: 2px dotted currentColor;
+    outline-offset: 4px;
+}
+
+.secret-ad-still,
+.secret-ad-door-still {
+    display: none;
+}
+
+body.secret-room,
+body.magic-room {
+    box-sizing: border-box;
+    min-height: 100vh;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.secret-room {
+    background: #faf9f3;
+}
+
+.secret-room.is-dark {
+    background: #171923;
+    color: #f1f1ef;
+}
+
+.secret-room.is-dark::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 25% 65%, rgb(176 185 194 / 13%), transparent 50%),
+                radial-gradient(ellipse at 78% 35%, rgb(168 175 184 / 10%), transparent 45%);
+}
+
+.secret-room-center,
+.magic-center {
+    position: fixed;
+    z-index: 2;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 0;
+    pointer-events: none;
+}
+
+.secret-room-center > *,
+.magic-center > * {
+    pointer-events: auto;
+}
+
+.secret-switch img {
+    width: 60px;
+    height: 78px;
+    image-rendering: pixelated;
+}
+
+.secret-switch {
+    color: inherit;
+}
+
+.secret-unlocked-door {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 3;
+}
+
+.secret-unlocked-door img {
+    display: block;
+    width: 48px;
+    height: 48px;
+    image-rendering: pixelated;
+}
+
+.secret-room-return {
+    position: fixed;
+    left: 50%;
+    bottom: 1rem;
+    z-index: 3;
+    transform: translateX(-50%);
+}
+
+.secret-room-return img,
+.magic-return img {
+    display: block;
+    width: 39px;
+    height: 46px;
+}
+
+.magic-wall {
+    box-sizing: border-box;
+    position: relative;
+    z-index: 0;
+    min-height: 100vh;
+    padding: 1rem;
+    color: #77756f;
+    font: 1rem/1.8 "Comic Sans MS", "Segoe Print", cursive;
+    overflow-wrap: anywhere;
+}
+
+.magic-wall span {
+    display: inline-block;
+    margin-right: 1.5rem;
+}
+
+.magic-ball img {
+    width: 44px;
+    height: 54px;
+    image-rendering: pixelated;
+}
+
+.magic-cursor {
+    position: fixed;
+    z-index: 30;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+}
+
+.secret-screen-reader {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    body.magic-cursor-active,
+    body.magic-cursor-active * {
+        cursor: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .secret-ad-art,
+    .secret-ad-door img,
+    .magic-cursor {
+        display: none;
+    }
+
+    .secret-ad-still,
+    .secret-ad-door-still {
+        display: block;
+        padding: 0.5rem;
+        color: #111;
+        background: #fff;
+        font: 0.8rem Arial, sans-serif;
+        line-height: 1.2;
+    }
+
+    body.magic-cursor-active,
+    body.magic-cursor-active * {
+        cursor: var(--magic-static-cursor, auto);
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Nicholas Greiner's research on near-terminal warning in vision-language-action models and attribution-based out-of-distribution detection.">
+    <meta name="description" content="Nicholas Greiner's research on robot learning, vision-language-action models, and machine learning reliability.">
     <title>Research — Nicholas Greiner</title>
     <link rel="icon" href="ImageBin/shared/world.gif" type="image/gif">
     <link rel="stylesheet" href="styles/style.css?v=20261107">
@@ -34,11 +34,63 @@
 
         <hr>
 
+        <section class="research-project" aria-labelledby="hsr-heading">
+            <h2 id="hsr-heading"><span class="research-number">01.</span>
+                HIERARCHICAL SKILL RETRIEVAL<br>
+                FOR ROBOT LEARNING</h2>
+            <p class="research-status">[IN PROGRESS]</p>
+
+            <section aria-labelledby="hsr-question">
+                <h3 id="hsr-question">What I'm trying to replicate</h3>
+                <p class="research-question">Can examples from other robot tasks help a model adapt to a new task with only a few demonstrations?</p>
+                <p>I'm replicating <a href="https://arxiv.org/abs/2608.24042">Hierarchical Skill Retrieval (HSR)</a> to understand how a robot can reuse pieces of past experience. The paper's idea is to break a task into smaller skills, find related demonstrations, and use them alongside a few examples of the new task.</p>
+                <p>My test task is a simulated robot putting a yellow-and-white mug in a microwave and closing it. I use LIBERO, a robot simulation benchmark, and SmolVLA, a model that uses images and language to predict robot actions. <a href="https://hoar012.github.io/HSR-Project/">[original paper's project page]</a></p>
+            </section>
+
+            <details class="research-disclosure">
+                <summary>
+                    <strong>How the pieces fit together</strong>
+                    <span>From task descriptions to retrieved demonstrations and model adaptation.</span>
+                </summary>
+                <p>I explored and indexed the demonstrations, grouped task descriptions into skills, and generated and scored possible plans for the target task. I then searched for prior demonstrations whose instructions were similar to the selected subtasks. That language search returns whole demonstrations; the next step looks inside them for individual moments resembling the target examples.</p>
+                <p>I use the broader language-retrieved demonstrations for an initial round of additional training. Then I continue training with a mixture of five target-task demonstrations and the selected moments from prior tasks. Finally, I evaluate the adapted model in the simulator alongside a model trained only on the target examples.</p>
+            </details>
+
+            <details class="research-disclosure">
+                <summary>
+                    <strong>Notebook 06: finding useful behavior</strong>
+                    <span>Comparing recorded moments, and learning what a similarity score can miss.</span>
+                </summary>
+                <p>A demonstration can sound relevant while containing many moments that don't help with the new task. To compare those moments, I trained a small model called a variational autoencoder to compress the robot's state and actions into a shorter description. I compared each candidate moment with the five target demonstrations and kept the closest matches for each subtask.</p>
+                <p>I checked the saved frame references and selections, and independently recomputed a small sample of distances. One difficult lesson was that a close numerical match is not necessarily a useful skill: the representation doesn't see the images or object state, and some opening-the-microwave moments were selected for the closing subtask. This encoder is my simplified approximation, not a verified copy of the paper's implementation.</p>
+            </details>
+
+            <details class="research-disclosure">
+                <summary>
+                    <strong>Notebook 07: preparing the model's training data</strong>
+                    <span>Turning retrieved episode and frame references into action sequences for SmolVLA.</span>
+                </summary>
+                <p>The retrieval stages produced references to episodes and frames, but SmolVLA needs observations paired with sequences of actions. I mapped the references back to the converted data, kept training and validation episodes separate, removed duplicate frame selections, and checked how sequences are padded at episode boundaries.</p>
+                <p>Each selected frame becomes the start of an action sequence from its original demonstration. I start with pretrained SmolVLA, train on the language-retrieved episodes, and then continue with a 50/50 mix of target and behavior-selected examples. That sampling balance and my use of selected frames as sequence starts are implementation choices I made while working through the problem.</p>
+            </details>
+
+            <details class="research-disclosure">
+                <summary>
+                    <strong>What I've tested and what's next</strong>
+                    <span>Simulator rollouts, partial progress, and open questions about the comparison.</span>
+                </summary>
+                <p>I tested the adapted policy and a target-only baseline on the simulated task. An earlier 20-episode comparison recorded 0 successes for the HSR policy and 2 for the baseline; a later comparison recorded 0 out of 20 for each. These small tests do not show that my retrieval pipeline improved performance. The later models also had different amounts of training, so that comparison is not a controlled test of retrieval alone.</p>
+                <p>Watching a rollout showed the HSR policy reach the mug and move it toward the microwave without completing the task. I also checked the simulator by replaying a recorded demonstration successfully. I'm still investigating retrieval quality, training choices, and the evaluation setup; offline losses and similarity scores are useful checks, but they do not measure task success.</p>
+            </details>
+        </section>
+
+        <hr>
+
         <section class="research-project" aria-labelledby="vla-heading">
-            <h2 id="vla-heading"><span class="research-number">01.</span>
+            <h2 id="vla-heading"><span class="research-number">02.</span>
                 ACTIVATION-BASED FAILURE WARNING IN<br>
                 VISION-LANGUAGE-ACTION MODELS</h2>
-            <p class="research-status">[IN PROGRESS]</p>
+            <p class="research-status">[COMPLETED, BUT INCONCLUSIVE]</p>
 
             <section aria-labelledby="vla-question">
                 <h3 id="vla-question">Research question</h3>
@@ -158,7 +210,7 @@
         <hr>
 
         <section class="research-project" aria-labelledby="xai-heading">
-            <h2 id="xai-heading"><span class="research-number">02.</span>
+            <h2 id="xai-heading"><span class="research-number">03.</span>
                 ATTRIBUTION-BASED<br>
                 OUT-OF-DISTRIBUTION DETECTION</h2>
             <p class="research-status">[COMPLETED]</p>
